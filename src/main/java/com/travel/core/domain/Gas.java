@@ -25,7 +25,7 @@ public class Gas implements Serializable {
     @OneToMany (fetch = FetchType.LAZY, mappedBy = "gas",cascade = CascadeType.ALL)
     private List<Station> stations;
 
-   
+
 
 
 
