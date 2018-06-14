@@ -3,6 +3,7 @@ package com.travel.core.config;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -20,14 +21,28 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.travel.core.repository")
 public class DatabaseConfig {
+    @Value("#{databaseProperties['db.username']}")
+    private String userName;
+    @Value("#{databaseProperties['db.password']}")
+    private String passWord;
+    @Value("#{databaseProperties['db.url']}")
+    private String url;
+    @Value("#{databaseProperties['db.driver']}")
+    private String driver;
+    @Value("#{databaseProperties['db.port']}")
+    private String port;
+    @Value("#{databaseProperties['db.dName']}")
+    private String dName;
+
+
 
     @Bean
     public  DataSource getDataSource(){
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("org.postgresql.ds.PGSimpleDataSource");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/travelBud");
-        dataSource.setUsername("admin");
-        dataSource.setPassword("password");
+        dataSource.setDriverClassName(driver);
+        dataSource.setUrl("jdbc:postgresql://+:"+port+"/"+dName);
+        dataSource.setUsername(userName);
+        dataSource.setPassword(passWord);
 //        dataSource.setValidationQuery(databaseValidationQuery);
         dataSource.setTestOnBorrow(true);
         dataSource.setTestOnReturn(true);
