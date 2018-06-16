@@ -47,7 +47,6 @@ public class DatabaseConfig {
         dataSource.setUrl(serverName);
         dataSource.setUsername(userName);
         dataSource.setPassword(passWord);
-//        dataSource.setValidationQuery(databaseValidationQuery);
         dataSource.setTestOnBorrow(true);
         dataSource.setTestOnReturn(true);
         dataSource.setTestWhileIdle(true);

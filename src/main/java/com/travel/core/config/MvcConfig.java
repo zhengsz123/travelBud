@@ -36,6 +36,7 @@ public class MvcConfig  implements WebMvcConfigurer {
     /*
      * Configure ContentNegotiatingViewResolver
      */
+    // only resolve JSON.
     @Bean
     public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
         ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
