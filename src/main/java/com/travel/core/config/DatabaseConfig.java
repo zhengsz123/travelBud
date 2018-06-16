@@ -1,11 +1,14 @@
 package com.travel.core.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.flywaydb.core.Flyway;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -33,14 +36,15 @@ public class DatabaseConfig {
     private String port;
     @Value("#{databaseProperties['db.dName']}")
     private String dName;
-
+    @Value("#{databaseProperties['db.serverName']}")
+    private String serverName;
 
 
     @Bean
     public  DataSource getDataSource(){
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(driver);
-        dataSource.setUrl("jdbc:postgresql://+:"+port+"/"+dName);
+        dataSource.setUrl(serverName);
         dataSource.setUsername(userName);
         dataSource.setPassword(passWord);
 //        dataSource.setValidationQuery(databaseValidationQuery);
@@ -54,7 +58,20 @@ public class DatabaseConfig {
         return dataSource;
     }
 
-    @Bean
+    @Profile({"dev","unit"})
+    @Bean(name = "flyway",initMethod = "validate")
+    public Flyway flywayDev(@Autowired DataSource dataSource){
+       return setUpFlyWay(dataSource);
+    }
+
+    @Profile({"stage","prod","test"})
+    @Bean(name = "flyway",initMethod = "migrate")
+    public Flyway flywayDevMigrate(@Autowired DataSource dataSource){
+        return setUpFlyWay(dataSource);
+    }
+
+    @Bean(name = "entityManagerFactory")
+    @DependsOn("flyway")
     public LocalContainerEntityManagerFactoryBean getEntityManager(){
         LocalContainerEntityManagerFactoryBean factoryBean = setUpLocalContainerEntityManagerFactoryBean();
         Properties props = new Properties();
@@ -87,5 +104,13 @@ public class DatabaseConfig {
         transactionManager.setDataSource(dataSource);
         return  transactionManager;
     }
+
+    private Flyway setUpFlyWay(DataSource dataSource) {
+       Flyway flyway = new Flyway();
+       flyway.setBaselineOnMigrate(true);
+       flyway.setLocations("classpath:db/migration/");
+       flyway.setDataSource(dataSource);
+       return flyway;
+   }
 
 }

@@ -24,13 +24,13 @@ public class AppConfig {
         return bean;
     }
 
-    @Bean("mailProperties")
-    public PropertiesFactoryBean mailProperties() throws Exception {
-        String profile = env.getActiveProfiles()[0];
-        PropertiesFactoryBean bean = new PropertiesFactoryBean();
-        bean.setLocation(new ClassPathResource("META-INF/"+profile+"-mail.properties"));
-        return bean;
-    }
+//    @Bean("mailProperties")
+//    public PropertiesFactoryBean mailProperties() throws Exception {
+//        String profile = env.getActiveProfiles()[0];
+//        PropertiesFactoryBean bean = new PropertiesFactoryBean();
+//        bean.setLocation(new ClassPathResource("META-INF/"+profile+"-mail.properties"));
+//        return bean;
+//    }
 
 
 }
