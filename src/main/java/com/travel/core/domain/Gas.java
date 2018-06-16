@@ -26,8 +26,13 @@ public class Gas implements Serializable {
     private List<Station> stations;
 
 
+    public void setGasType(String gasType) {
+        this.gasType = gasType;
+    }
 
-
+    public void setStations(List<Station> stations) {
+        this.stations = stations;
+    }
 
     public long getId() {
         return id;
