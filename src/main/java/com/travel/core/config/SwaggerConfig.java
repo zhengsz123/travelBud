@@ -1,5 +1,6 @@
 package com.travel.core.config;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -18,7 +19,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.regex(".*api.*"))
+                .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
     }
@@ -26,7 +27,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("travelBud API")
-                .description("travelbud dealer api document")
+                .description("travelBud dealer api document")
                 .version("1.1")
 //                .termsOfServiceUrl("http://terms-of-services.url")
                 .license("LICENSE")
