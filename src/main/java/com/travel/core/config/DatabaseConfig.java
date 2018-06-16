@@ -96,7 +96,7 @@ public class DatabaseConfig {
         return factoryBean;
     }
 
-    @Bean
+    @Bean(name="transactionManager")
     public PlatformTransactionManager getTransactionManager(@Autowired EntityManagerFactory factor, @Autowired DataSource dataSource){
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(factor);
