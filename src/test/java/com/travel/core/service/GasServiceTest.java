@@ -1,9 +1,11 @@
-package com.travel.core.repository;
+package com.travel.core.service;
 
 import com.travel.core.config.AppConfig;
 import com.travel.core.config.DatabaseConfig;
 import com.travel.core.domain.Gas;
 import com.travel.core.domain.User;
+import com.travel.core.repository.GasRepository;
+import com.travel.core.service.GasService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +26,22 @@ import static org.junit.Assert.assertNull;
 @ContextConfiguration(classes = {AppConfig.class,DatabaseConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("unit")
-public class GasTest {
+public class GasServiceTest {
     @Autowired
     private GasRepository gasRepository;
+    @Autowired
+    private GasService gasService;
 
     @Test
     @Transactional
-    public void findByIdTest(){
-        Gas tester = new Gas();
-        tester.setGasType("93");
-        gasRepository.save(tester);
-        Optional<Gas> testGas = gasRepository.findById(tester.getId());
-        assertNotNull(testGas);
-        assertEquals(tester.getId(),testGas.get().getId());
+    public void gasServiceTest(){
+        Gas g = new Gas ();
+        g.setId(55);
+        gasRepository.save(g);
+        Gas testG = gasService.findBy(g);
+        assertNotNull(testG);
+        assertEquals(g.getId(),testG.getId());
+
     }
 
 }
