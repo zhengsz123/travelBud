@@ -3,9 +3,7 @@ package com.travel.core.service;
 import com.travel.core.config.AppConfig;
 import com.travel.core.config.DatabaseConfig;
 import com.travel.core.domain.Gas;
-import com.travel.core.domain.User;
 import com.travel.core.repository.GasRepository;
-import com.travel.core.service.GasService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
-import static com.sun.deploy.util.SessionState.save;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 @WebAppConfiguration
 @ContextConfiguration(classes = {AppConfig.class,DatabaseConfig.class})
@@ -28,15 +21,15 @@ import static org.junit.Assert.assertNull;
 @ActiveProfiles("unit")
 public class GasServiceTest {
     @Autowired
-    private GasRepository gasRepository;
-    @Autowired
     private GasService gasService;
+    @Autowired
+    private GasRepository gasRepository;
 
     @Test
     @Transactional
     public void gasServiceTest(){
-        Gas g = new Gas ();
-        g.setId(55);
+        Gas g = new Gas();
+        g.setGasType("99");
         gasRepository.save(g);
         Gas testG = gasService.findBy(g);
         assertNotNull(testG);

@@ -38,11 +38,11 @@ public class Gas implements Serializable {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getGasType() {
+        return gasType;
     }
 
-
-
-
+    public List<Station> getStations() {
+        return stations;
+    }
 }

@@ -295,7 +295,7 @@
                 <version>${flyway.version}</version>
                 <configuration>
                     <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:5432/travelBud</url>
+                    <url>jdbc:postgresql://localhost:5432/travelBud_Unit</url>
                     <user>admin</user>
                     <password>password</password>
                     <locations>
