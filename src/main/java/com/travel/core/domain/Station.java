@@ -39,10 +39,6 @@ public class Station {
         return gasLocation;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public void setGasPrice(String gasPrice) {
         this.gasPrice = gasPrice;
     }

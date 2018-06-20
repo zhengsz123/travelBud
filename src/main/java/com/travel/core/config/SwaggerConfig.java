@@ -27,7 +27,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("travelBud API")
-                .description("travelBud dealer api document")
+                .description("travelBud api document")
                 .version("1.1")
 //                .termsOfServiceUrl("http://terms-of-services.url")
                 .license("LICENSE")

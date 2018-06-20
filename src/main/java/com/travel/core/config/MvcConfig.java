@@ -58,13 +58,4 @@ public class MvcConfig  implements WebMvcConfigurer {
         return new JsonViewResolver();
     }
 
-
-   /* @Bean(name = "multipartResolver")
-    public CommonsMultipartResolver getMultipartResolver() {
-        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-        resolver.setMaxUploadSize(10008439);
-        return resolver;
-    }*/
-
-
 }
