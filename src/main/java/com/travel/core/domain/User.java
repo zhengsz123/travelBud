@@ -20,6 +20,9 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private  String lastName;
+    @Column(name = "username")
+    private String userName;
+
 
 //    @Column(name ="gas_quality")
 //    private String gasQuality;
@@ -38,6 +41,14 @@ public class User {
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setFirstName(String firstName) {
