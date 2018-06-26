@@ -24,4 +24,7 @@ Unit: mvn compile -Dspring.profiles.active=unit
 
 mvn compile package -DoutputDirectory=../TravelBud2/target
 
+6. Configs Path:
+
+travelBud/src/main/java/com/travel/core/config/
 
