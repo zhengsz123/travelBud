@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GasRepository extends CrudRepository<Gas, Long> {
-   List<Gas> findAll();
 
     @Query("Select g FROM Gas g LEFT JOIN FETCH g.stations where g.id = ?1")
     Optional<Gas> findByIdWithStations(Long Id);
+
 }
