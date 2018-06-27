@@ -1,0 +1,119 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Cloudformation template to create codebuild and codepipeline
+Parameters:
+  VpcId:
+    Description: In which VPC will Codebuild be running
+    Type: AWS::EC2::VPC::Id
+  SecurityStack:
+    Description: Name of an active CloudFormation stack that contains all roles and SGs resources
+    Type: String
+    Default: Ascending-Security
+  PrivateSubnets:
+    Description: Private subnets for Codebuild VPC config
+    Type: List<AWS::EC2::Subnet::Id>
+  OAuthToken:
+    Description: OAuthToken to connect to github
+    Type: String
+    NoEcho: true
+Resources:
+  CodePipelineFailureNotification:
+    Type: AWS::SNS::Topic
+  CodePipelineFailureEvents:
+    Type: AWS::Events::Rule
+    Properties:
+      EventPattern:
+        source:
+          - aws.codepipeline
+        detail-type:
+          - CodePipeline Pipeline Execution State Change
+        detail:
+          state: 
+            - FAILED
+          pipeline:
+            - !Ref AscendingCodePipeline
+      State: ENABLED
+      Targets:
+        - Id: CodePipelineFailureNotification
+          Arn: !Ref CodePipelineFailureNotification
+          Input: "{\"Warning\" : \"Your CICD process failed\"}"
+  UnitTest:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: no_artifacts
+      Description: Unit Test before Build and Deployment
+      Environment: 
+        EnvironmentVariables:
+          - Name:  ENV
+            Value: !Ref Environment 
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: python:3.6
+        Type: LINUX_CONTAINER
+      Name: 
+        Fn::Join:
+          - ''
+          - - !Ref AWS::StackName
+            - '-UnitTest'
+      VpcConfig:
+        SecurityGroupIds:
+          - Fn::ImportValue: !Sub "${SecurityStack}-JumpBoxSG"
+        Subnets: !Ref PrivateSubnets
+        VpcId: !Ref VpcId
+      ServiceRole: 
+        Fn::ImportValue: !Sub "${SecurityStack}-CodeBuildRole"
+      Source: 
+        BuildSpec: |
+          version: 0.2
+          phases:
+            install:
+              commands:
+                - pip install pipenv
+                - export PIPENV_VENV_IN_PROJECT=`pwd`
+                - pipenv install
+            pre_build:
+              commands:
+                - pipenv run python manage.py migrate --settings=takeout.settings.${ENV}
+            build:
+              commands:
+                - pipenv run python manage.py test --settings=takeout.settings.${ENV}
+        Location: https://github.com/zhengsz123/travelBud.git
+        Type: GITHUB
+  AscendingCodePipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      RoleArn: 
+        Fn::ImportValue: !Sub "${SecurityStack}-CodePipelineRole"
+      ArtifactStore:
+        Type: S3
+        Location: ascending-devops
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: AscendingSource
+              ActionTypeId: 
+                Category: Source
+                Owner: ThirdParty
+                Provider: GitHub
+                Version: 1
+              Configuration:
+                Owner: zhengsz123
+                Repo: travelBud
+                Branch: master
+                OAuthToken: !Ref OAuthToken
+              OutputArtifacts:
+                - Name: Source
+              RunOrder: 1
+        - Name: UnitTest
+          Actions:
+            - Name: AscendingUnitTest
+              ActionTypeId: 
+                Category: Test
+                Owner: AWS
+                Provider: CodeBuild
+                Version: 1
+              Configuration:
+                ProjectName: !Ref UnitTest
+              InputArtifacts:
+                - Name: Source
+              RunOrder: 1
