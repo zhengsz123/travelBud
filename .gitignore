@@ -29,6 +29,8 @@
 *.sqlite
 *.properties
 !dev-db.properties
+!log4j.properties
+src/main/resources/META-INF/prod-db.properties
 out/
 target/
 # OS generated files #
