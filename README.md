@@ -1,30 +1,29 @@
-# travelBud Restful API 
+### TravelBud Restful API 
 
 It is a Maven Project based on Spring MVC framework.
 
-1- Docker set up :
+#### Run postgres container locally 
 
-Docker pull postgres
+```
+docker pull postgres
 docker run --name travelBudDB -e POSTGRES_DB=travelBud -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres
+```
 
-2-How to do Unit Test
+#### Unit Test
 
+```
 mvn compile test -Dspring.profiles.active=unit 
+```
 
-3. Different Environment Variable :
+#### Configuration information (The config file is located in ./src/main/resources/META-INF/)
 
-Dev : mvn compile -Dspring.profiles.active=dev
-Unit: mvn compile -Dspring.profiles.active=unit
+```
+mvn compile -Dspring.profiles.active=dev
+mvn compile -Dspring.profiles.active=unit
+```
 
-4. Mvn Version :
+#### Package Command
 
-10.13.3
-
-5. Package :
-
-mvn compile package -DoutputDirectory=../TravelBud2/target
-
-6. Configs Path:
-
-travelBud/src/main/java/com/travel/core/config/
-
+```
+mvn compile package -DoutputDirectory=./target
+```

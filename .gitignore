@@ -27,6 +27,8 @@
 *.log
 *.sql
 *.sqlite
+*.properties
+!dev-db.properties
 out/
 target/
 # OS generated files #
