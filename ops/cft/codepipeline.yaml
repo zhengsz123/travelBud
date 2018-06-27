@@ -44,11 +44,11 @@ Resources:
         Type: no_artifacts
       Description: Unit Test before Build and Deployment
       Environment: 
-        EnvironmentVariables:
-          - Name:  ENV
-            Value: !Ref Environment 
+        # EnvironmentVariables:
+        #   - Name:  ENV
+        #     Value: !Ref Environment 
         ComputeType: BUILD_GENERAL1_SMALL
-        Image: python:3.6
+        Image: aws/codebuild/java:openjdk-8
         Type: LINUX_CONTAINER
       Name: 
         Fn::Join:
@@ -66,17 +66,12 @@ Resources:
         BuildSpec: |
           version: 0.2
           phases:
-            install:
-              commands:
-                - pip install pipenv
-                - export PIPENV_VENV_IN_PROJECT=`pwd`
-                - pipenv install
             pre_build:
               commands:
-                - pipenv run python manage.py migrate --settings=takeout.settings.${ENV}
+                - aws s3 cp s3://ascending-devops/project1/unit-db.properties ./src/main/resources/META-INF/
             build:
               commands:
-                - pipenv run python manage.py test --settings=takeout.settings.${ENV}
+                - mvn compile test -Dspring.profiles.active=unit
         Location: https://github.com/zhengsz123/travelBud.git
         Type: GITHUB
   AscendingCodePipeline:
