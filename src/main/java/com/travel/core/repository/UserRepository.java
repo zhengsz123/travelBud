@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User,String> {
 
-    @Query ("select u from User u where u.em = ?2 or u.username = ?1")
+    @Query ("select u from User u where u.username = ?1")
     Optional<User> findByFirstNameOrLastName(String firstOrLast, Boolean unlock);
 }
