@@ -14,8 +14,6 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
-
-
     @Id
    @GeneratedValue(strategy = SEQUENCE, generator = "users_id_seq")
    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq")
@@ -29,19 +27,15 @@ public class User implements UserDetails {
     private String username;
     @Column(name = "password")
     private String passWord;
-    @Column(name = "account_non_expired")
-    private Boolean accountNonExpired;
-    @Column(name = "account_non_locked")
-    private Boolean accountNonLocked;
-    @Column(name = "credential_non_expired")
-    private Boolean credentialNonExpired;
-    @Column(name = "enable_or_not")
-    private Boolean enable;
+    @Column(name = "accountExpired")
+    private Boolean accountExpired;
+    @Column(name = "account_locked")
+    private Boolean accountLocked;
+    @Column(name = "credential_expired")
+    private Boolean credentialExpired;
+    @Column(name = "enabled")
+    private Boolean enabled;
 
-
-
-//    @Column(name ="gas_quality")
-//    private String gasQuality;
 
     public String getLastName() {
         return lastName;
@@ -83,22 +77,21 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return accountNonExpired;
+        return !accountExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return accountNonLocked;
+        return !accountLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return credentialNonExpired;
+        return !credentialExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return enable;
+        return enabled;
     }
 }
-

@@ -11,16 +11,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = {"/api/users","/api/user"}, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = {"/api/users/","/api/user"}, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
     @Autowired
     private CrudRepository userRepository;
     Logger logger = LoggerFactory.getLogger(getClass());
 
-    @RequestMapping( value = "/login",method = RequestMethod.POST)
+    @RequestMapping( value = "/login/",method = RequestMethod.POST)
     @ResponseBody
     public List printUserLogin( @RequestParam("username") String userName){
         logger.debug(userName);
         return null;
+    }
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
+
+    public User userListPost(@RequestBody  User user){
+        userRepository.save(user);
+        return user;
     }
 }
