@@ -1,0 +1,1 @@
+ALTER SEQUENCE station_id_seq OWNED BY station.id;
