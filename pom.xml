@@ -8,10 +8,10 @@
     <artifactId>api-core-v1</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
+    <name>travel-bud-spring-mvc</name>
 
     <properties>
         <spring.version>5.0.6.RELEASE</spring.version>
-        <spring.security.version>5.0.5.RELEASE</spring.security.version>
         <fasterxml-jackson.version>2.9.5</fasterxml-jackson.version>
         <java-version>1.8</java-version>
         <hibernate.version>5.3.1.Final</hibernate.version>
@@ -69,13 +69,19 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>${spring.security.version}</version>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>${spring.security.version}</version>
+            <version>${spring.version}</version>
         </dependency>
+
 
         <!--json-->
         <dependency>
@@ -98,25 +104,6 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20180130</version>
-        </dependency>
-
-        <!--Spring Security-->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>5.0.6.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>5.0.6.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>5.0.6.RELEASE</version>
         </dependency>
 
         <!--hibernate-->
@@ -319,7 +306,7 @@
                 <version>${flyway.version}</version>
                 <configuration>
                     <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:5432/travelbud_unit</url>
+                    <url>jdbc:postgresql://localhost:5432/travelBud</url>
                     <user>admin</user>
                     <password>password</password>
                     <locations>
