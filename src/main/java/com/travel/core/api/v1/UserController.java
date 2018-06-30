@@ -1,6 +1,7 @@
 package com.travel.core.api.v1;
 
 import com.travel.core.domain.User;
+import com.travel.core.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,20 @@ public class UserController {
 
     @RequestMapping( value = "/login/",method = RequestMethod.POST)
     @ResponseBody
-    public List printUserLogin( @RequestParam("username") String userName){
+    public List printUserLogin( @RequestParam("userName") String userName){
         logger.debug(userName);
         return null;
     }
+
+    @Autowired
+    private UserService userService;
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-
     public User userListPost(@RequestBody  User user){
-        userRepository.save(user);
+        // This should be in the UserService//
+
+        userService.save(user);
+        //*********************************//
         return user;
     }
 }

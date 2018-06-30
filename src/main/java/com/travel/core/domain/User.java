@@ -26,8 +26,8 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String username;
     @Column(name = "password")
-    private String passWord;
-    @Column(name = "accountExpired")
+    private String password;
+    @Column(name = "account_Expired")
     private Boolean accountExpired;
     @Column(name = "account_locked")
     private Boolean accountLocked;
@@ -35,31 +35,79 @@ public class User implements UserDetails {
     private Boolean credentialExpired;
     @Column(name = "enabled")
     private Boolean enabled;
+    @Column(name = "email")
+    private String email;
 
+    public String getEmail() {
+        return email;
+    }
 
-    public String getLastName() {
-        return lastName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setLastName(String lastName) {
+
         this.lastName = lastName;
     }
 
-    public long getId() {
-        return id;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAccountExpired(Boolean accountExpired) {
+        this.accountExpired = accountExpired;
+    }
+
+    public void setAccountLocked(Boolean accountLocked) {
+        this.accountLocked = accountLocked;
+    }
+
+    public void setCredentialExpired(Boolean credentialExpired) {
+        this.credentialExpired = credentialExpired;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setUsername(String userName) {
-        this.username = userName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public Boolean getAccountExpired() {
+        return accountExpired;
     }
+
+    public Boolean getAccountLocked() {
+        return accountLocked;
+    }
+
+    public Boolean getCredentialExpired() {
+        return credentialExpired;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+
+    }
+
+    public long getId() {
+        return id;
+    }
+
 
     @Override
     public String getUsername() {
@@ -72,7 +120,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return passWord;
+        return password;
     }
 
     @Override

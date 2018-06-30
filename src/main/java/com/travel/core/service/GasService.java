@@ -11,12 +11,6 @@ import java.util.Optional;
 public class GasService {
     @Autowired
     private GasRepository gasRepository;
-
-//    @Transactional
-//    public Gas save(Gas g){
-//        return gasRepository.save(g);
-//    }
-
     @Transactional(readOnly = true)
     public Gas findBy(Gas g){
         Optional<Gas> optional = gasRepository.findById(g.getId());
