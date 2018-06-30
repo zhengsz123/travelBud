@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.sun.tools.doclint.Entity.and;
+import static org.apache.commons.io.filefilter.FileFilterUtils.and;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -29,6 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTERED_USER")
                 .and()
-                    .exceptionHandling().authenticationEntryPoint(myAuthenticaitonEntrypoint);
+                    .exceptionHandling().authenticationEntryPoint(myAuthenticaitonEntrypoint)
+                .and()
+                    .formLogin();
     }
 }

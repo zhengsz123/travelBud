@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 
 import java.util.Collection;
+import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -19,6 +20,8 @@ public class User implements UserDetails {
    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq")
     private long id;
 
+    @OneToMany (fetch = FetchType.LAZY, mappedBy = "authorities",cascade = CascadeType.ALL)
+    private Collection<? extends GrantedAuthority> authorities;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -37,6 +40,10 @@ public class User implements UserDetails {
     private Boolean enabled;
     @Column(name = "email")
     private String email;
+
+    public void setAuthorities(Collection<GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 
     public String getEmail() {
         return email;
@@ -115,7 +122,7 @@ public class User implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities ;
     }
 
     @Override
