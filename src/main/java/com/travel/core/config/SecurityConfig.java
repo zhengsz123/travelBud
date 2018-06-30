@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.sun.tools.doclint.Entity.and;
-import static org.apache.commons.io.filefilter.FileFilterUtils.and;
 
 @Configuration
 @EnableWebSecurity

@@ -3,7 +3,6 @@ package com.travel.core.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -17,6 +16,8 @@ public class Authority implements Serializable {
 
     @Column(name = "authority_role")
     private String authorityRole;
+    @Column(name="users_id")
+    private Integer usersId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
