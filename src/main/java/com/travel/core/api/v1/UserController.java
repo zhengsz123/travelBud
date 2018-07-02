@@ -1,6 +1,8 @@
 package com.travel.core.api.v1;
 
+import com.travel.core.domain.Gas;
 import com.travel.core.domain.User;
+import com.travel.core.service.GasService;
 import com.travel.core.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +32,19 @@ public class UserController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public User userListPost(@RequestBody  User user){
-        // This should be in the UserService//
-
         userService.save(user);
-        //*********************************//
         return user;
     }
+
+    @Autowired
+    private GasService gasService;
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @ResponseBody
+    public Gas gasPriceUpdate(@RequestBody Gas gas){
+        gasService.updateGasPrice(gas);
+        return gas;
+
+ }
+
+
 }

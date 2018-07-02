@@ -1,0 +1,1 @@
+ALTER TABLE authorities ADD COLUMN user_id bigint;

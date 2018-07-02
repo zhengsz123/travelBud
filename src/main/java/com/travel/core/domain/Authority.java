@@ -16,8 +16,9 @@ public class Authority implements Serializable {
 
     @Column(name = "authority_role")
     private String authorityRole;
+
     @Column(name="users_id")
-    private Integer usersId;
+    private Long usersId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

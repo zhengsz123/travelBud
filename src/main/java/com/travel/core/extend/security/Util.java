@@ -1,6 +1,23 @@
 package com.travel.core.extend.security;
 
 
-public class Util{
+import com.travel.core.domain.Authority;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class Util{
+    public static Collection<GrantedAuthority> getAuthorities(List<Authority> authorities) {
+        List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
+
+        for (Authority auth : authorities){
+            String ROLE = auth.getAuthorityRole().toUpperCase();
+            authList.add(new SimpleGrantedAuthority(ROLE));
+        }
+
+        return authList;
+    }
 }
