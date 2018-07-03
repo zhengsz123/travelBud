@@ -19,7 +19,7 @@ public class User implements UserDetails {
     private long id;
 
 //    @OneToMany (fetch = FetchType.LAZY, mappedBy = "authorities",cascade = CascadeType.ALL)
-//    private Collection<? extends GrantedAuthority> authorities;
+// private Collection<? extends GrantedAuthority> authorities;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")

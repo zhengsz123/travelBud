@@ -2,6 +2,7 @@ package com.travel.core.service;
 
 import com.travel.core.domain.Authority;
 import com.travel.core.domain.User;
+import com.travel.core.extend.security.Utils;
 import com.travel.core.repository.AuthorityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,8 @@ public class UserDetailsServiceImpl implements UserDetailsService, MessageSource
     @Autowired
     private UserService userService;
     @Autowired
+    private AuthorityService authorityService;
+    @Autowired
     protected MessageSource messageSource;
 
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
@@ -39,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService, MessageSource
         if (domainUser == null) {
             throw new BadCredentialsException(messageSource.getMessage("AbstractUserDetailsAuthenticationProvider.UsernameNotFound", new Object[] {emailorUsername , "User {0} has no GrantedAuthority"}, Locale.US));
         }
-       // domainUser.setAuthorities(Utils.getAuthorities(userService.findAuthorities(domainUser)));
+         domainUser.setAuthorities(Utils.getAuthorities(authorityService.findAuthoritiesByUserId(domainUser)));
         return  domainUser;
     }
 

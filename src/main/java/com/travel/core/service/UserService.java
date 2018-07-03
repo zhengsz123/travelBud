@@ -1,7 +1,9 @@
 package com.travel.core.service;
 
+import com.travel.core.domain.Authority;
 import com.travel.core.domain.Gas;
 import com.travel.core.domain.User;
+import com.travel.core.repository.AuthorityRepository;
 import com.travel.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,4 +39,5 @@ public class UserService {
 
         return newUser;
     }
+
 }

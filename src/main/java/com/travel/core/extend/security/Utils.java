@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Util{
+public class Utils {
     public static Collection<GrantedAuthority> getAuthorities(List<Authority> authorities) {
         List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 
