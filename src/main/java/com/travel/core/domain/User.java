@@ -1,14 +1,12 @@
 package com.travel.core.domain;
 
-import com.fasterxml.jackson.databind.node.BooleanNode;
-import com.sun.javafx.beans.IDProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 
 import java.util.Collection;
-import java.util.List;
+
 
 import static javax.persistence.GenerationType.SEQUENCE;
 

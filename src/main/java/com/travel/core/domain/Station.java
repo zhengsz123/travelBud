@@ -1,7 +1,5 @@
 package com.travel.core.domain;
 
-import com.sun.javafx.beans.IDProperty;
-
 import javax.persistence.*;
 
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -9,8 +7,6 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @Table(name = "station")
 public class Station {
-
-
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "station_id_seq")
     private long id;
