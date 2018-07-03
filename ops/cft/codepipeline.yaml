@@ -48,7 +48,7 @@ Resources:
         #   - Name:  ENV
         #     Value: !Ref Environment 
         ComputeType: BUILD_GENERAL1_SMALL
-        Image: aws/codebuild/java:openjdk-8
+        Image: maven:3.5.0-jdk-8
         Type: LINUX_CONTAINER
       Name: 
         Fn::Join:
@@ -66,11 +66,18 @@ Resources:
         BuildSpec: |
           version: 0.2
           phases:
+            install:
+              commands:
+                - apt-get update
+                - apt-get install python-dev python-pip -y
+                - pip install awscli
             pre_build:
               commands:
                 - aws s3 cp s3://ascending-devops/project1/unit-db.properties ./src/main/resources/META-INF/
+                - aws s3 cp s3://ascending-devops/project1/unit-db.properties ./target/classes/META-INF/
             build:
               commands:
+                - mvn compile -P unit flyway:migrate -e -X
                 - mvn compile test -Dspring.profiles.active=unit
         Location: https://github.com/zhengsz123/travelBud.git
         Type: GITHUB
