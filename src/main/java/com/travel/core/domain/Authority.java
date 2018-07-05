@@ -29,8 +29,13 @@ public class Authority implements Serializable {
         return id;
     }
 
+    public void setAuthorityRole(String authorityRole) {
+        this.authorityRole = authorityRole;
+    }
+
     public String getAuthorityRole() {
         return authorityRole;
+
     }
 
 }
