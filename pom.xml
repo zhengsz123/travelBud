@@ -79,8 +79,8 @@
                         <version>${flyway.version}</version>
                         <configuration>
                             <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://db-test.ascendingdc.com:5432/travelbud_unit</url>
-                            <user>meter</user>
+                            <url>jdbc:postgresql://localhost:5432/travelbud_unit</url>
+                            <user>admin</user>
                             <password>password</password>
                             <locations>
                                 <location>db/migration</location>
