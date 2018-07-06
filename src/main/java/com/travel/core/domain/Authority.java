@@ -15,27 +15,31 @@ public class Authority implements Serializable {
     private long id;
 
     @Column(name = "authority_role")
-    private String authorityRole;
-
-    @Column(name="users_id")
-    private Long usersId;
+    private String authorities;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     public long getId() {
         return id;
     }
 
-    public void setAuthorityRole(String authorityRole) {
-        this.authorityRole = authorityRole;
+    public String getAuthorities() {
+        return authorities;
     }
 
-    public String getAuthorityRole() {
-        return authorityRole;
-
+    public void setAuthorities(String authorities) {
+        this.authorities = authorities;
     }
-
 }
