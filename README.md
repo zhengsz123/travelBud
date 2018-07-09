@@ -12,6 +12,8 @@ docker run --name travelBudDB -e POSTGRES_DB=travelBud -e POSTGRES_USER=admin -e
 #### Unit Test
 
 ```
+Create a database named travelbud_unit
+
 mvn compile test -Dspring.profiles.active=unit 
 ```
 
@@ -20,8 +22,16 @@ mvn compile test -Dspring.profiles.active=unit
 ```
 mvn compile -Dspring.profiles.active=dev
 mvn compile -Dspring.profiles.active=unit
+mvn compile -Dspring.profiles.active=unit_local
 ```
+####  migration
 
+
+```
+mvn -P dev flyway:migrate
+mvn -P unit flyway:migrate
+mvn -P unit_local flyway:migrate
+```
 #### Package Command
 
 ```

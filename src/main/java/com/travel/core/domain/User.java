@@ -1,5 +1,7 @@
 package com.travel.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,6 +14,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements UserDetails {
     @Id
    @GeneratedValue(strategy = SEQUENCE, generator = "users_id_seq")
@@ -40,6 +43,7 @@ public class User implements UserDetails {
     private String email;
 
     @Transient
+    @JsonIgnore
     private Collection<GrantedAuthority> authorities;
 
     public void setAuthorities(Collection<GrantedAuthority> authorities) {

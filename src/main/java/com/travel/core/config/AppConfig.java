@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.authentication.AuthenticationManager;
+
 @Configuration
 @ComponentScan(basePackages = "com.travel.core", excludeFilters = @ComponentScan.Filter(type=FilterType.REGEX,pattern="com.travel.core.api.*"))
 public class AppConfig {
@@ -19,7 +21,7 @@ public class AppConfig {
     public PropertiesFactoryBean dbProperties() throws Exception {
             String profile = env.getActiveProfiles()[0];
             PropertiesFactoryBean bean = new PropertiesFactoryBean();
-            bean.setLocation(new ClassPathResource("META-INF/" + profile + "-db.properties"));
+            bean.setLocation(new ClassPathResource("META-INF/env/" + profile + "-db.properties"));
             return bean;
     }
 
