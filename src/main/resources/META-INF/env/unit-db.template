@@ -1,0 +1,7 @@
+db.driver=org.postgresql.ds.PGSimpleDataSource
+db.username= ${username}
+db.password= ${password}
+db.jdbcPostgresql=jdbc:postgresql
+db.dName = ${databaseName}
+db.port= ${port}
+db.url=${url}

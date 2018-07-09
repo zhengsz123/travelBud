@@ -38,13 +38,15 @@ public class DatabaseConfig {
     private String dName;
     @Value("#{databaseProperties['db.serverName']}")
     private String serverName;
+    @Value("#{databaseProperties['db.jdbcPostgresql']}")
+    private  String jdbc;
 
 
     @Bean
     public  DataSource getDataSource(){
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(driver);
-        dataSource.setUrl(serverName);
+        dataSource.setUrl(jdbc+"://"+url+":"+port+"/"+dName);
         dataSource.setUsername(userName);
         dataSource.setPassword(passWord);
         dataSource.setTestOnBorrow(true);

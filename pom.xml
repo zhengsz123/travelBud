@@ -134,9 +134,9 @@
                         <version>${flyway.version}</version>
                         <configuration>
                             <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://localhost:5432/travelbud_unit</url>
-                            <user>admin</user>
-                            <password>password</password>
+                            <url>$jdbc:postgresql://${db_url}</url>
+                            <user>${db_username}</user>
+                            <password>${password}</password>
                             <locations>
                                 <location>db/migration</location>
                             </locations>
