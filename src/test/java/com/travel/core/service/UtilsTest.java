@@ -1,9 +1,10 @@
-package com.travel.core.repository;
+package com.travel.core.service;
 
 import com.travel.core.config.AppConfig;
 import com.travel.core.config.DatabaseConfig;
 import com.travel.core.domain.Authority;
 import com.travel.core.extend.security.Utils;
+import com.travel.core.repository.AuthorityRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
