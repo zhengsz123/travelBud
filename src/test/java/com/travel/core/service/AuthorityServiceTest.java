@@ -52,7 +52,7 @@ public class AuthorityServiceTest {
         authorityRepository.save(a);
         userRepository.save(u);
         List<Authority> authoritiesRole = authorityService.findAuthoritiesByUserId(u);
-        assertEquals(a.getAuthorities(),authoritiesRole.get(0).getUser().getId());
+        assertEquals(a.getUser().getId(),authoritiesRole.get(0).getUser().getId());
     }
 
 
