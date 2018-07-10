@@ -59,7 +59,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/singup", method = RequestMethod.POST)
     @ResponseBody
     public User userListPost(@RequestBody  User user){
         userService.save(user);
