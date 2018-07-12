@@ -1,6 +1,7 @@
 package com.travel.core.api.v1;
 
 import com.travel.core.domain.Gas;
+import com.travel.core.domain.Media;
 import com.travel.core.domain.User;
 import com.travel.core.extend.security.JwtTokenUtil;
 import com.travel.core.service.GasService;
@@ -21,6 +22,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.List;
 
@@ -74,7 +77,14 @@ public class UserController {
         gasService.updateGasPrice(gas);
         return gas;
 
- }
+    }
+
+    @RequestMapping( value = "/uploadUserImage",method = RequestMethod.POST)
+    @ResponseBody
+    public Media uploadUserImage(MultipartFile image){
+        logger.debug(image.getName());
+        return null;
+    }
 
 
 }

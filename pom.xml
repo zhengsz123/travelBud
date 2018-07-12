@@ -23,7 +23,7 @@
                             <version>${flyway.version}</version>
                             <configuration>
                                 <driver>org.postgresql.Driver</driver>
-                                <url>jdbc:postgresql://localhost:5432/travelBud</url>
+                                <url>jdbc:postgresql://localhost:5432/travelbud</url>
                                 <user>admin</user>
                                 <password>password</password>
                                 <locations>
@@ -427,7 +427,18 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
+        <!--AWS-->
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.11.366</version>
+        </dependency>
     </dependencies>
+
+
+
 
     <repositories>
         <repository>

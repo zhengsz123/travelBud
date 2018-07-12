@@ -130,12 +130,6 @@ public class User implements UserDetails {
         return authorities ;
     }
 
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return null;
-//    }
-
     @Override
     public String getPassword() {
         return password;
