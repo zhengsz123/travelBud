@@ -8,6 +8,7 @@ import com.travel.core.service.GasService;
 import com.travel.core.service.UserService;
 import javassist.NotFoundException;
 import net.bytebuddy.asm.Advice;
+import org.hibernate.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @RequestMapping(value = "/singup", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseBody
     public User userListPost(@RequestBody  User user){
         userService.save(user);
@@ -79,9 +80,9 @@ public class UserController {
 
     }
 
-    @RequestMapping( value = "/uploadUserImage",method = RequestMethod.POST)
+    @RequestMapping( value = "/image",method = RequestMethod.POST)
     @ResponseBody
-    public Media uploadUserImage(MultipartFile image){
+    public Media uploadUserImage(@RequestParam ("pic") MultipartFile image){
         logger.debug(image.getName());
         return null;
     }

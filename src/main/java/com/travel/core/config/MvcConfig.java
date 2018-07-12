@@ -39,6 +39,12 @@ public class MvcConfig  implements WebMvcConfigurer {
         configurer.defaultContentType(MediaType.APPLICATION_JSON);
     }
 
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver getMultipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setMaxUploadSize(10008439);
+        return resolver;
+    }
     /*
      * Configure ContentNegotiatingViewResolver
      */
