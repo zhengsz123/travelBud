@@ -20,9 +20,6 @@ public class User implements UserDetails {
    @GeneratedValue(strategy = SEQUENCE, generator = "users_id_seq")
    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq")
     private long id;
-
-//    @OneToMany (fetch = FetchType.LAZY, mappedBy = "authorities",cascade = CascadeType.ALL)
-// private Collection<? extends GrantedAuthority> authorities;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")

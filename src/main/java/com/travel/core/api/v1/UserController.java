@@ -1,14 +1,11 @@
 package com.travel.core.api.v1;
 
-import com.travel.core.domain.Gas;
-import com.travel.core.domain.Media;
-import com.travel.core.domain.User;
+import com.travel.core.domain.*;
 import com.travel.core.extend.security.JwtTokenUtil;
+import com.travel.core.repository.AuthorityRepository;
+import com.travel.core.service.AuthorityService;
 import com.travel.core.service.GasService;
 import com.travel.core.service.UserService;
-import javassist.NotFoundException;
-import net.bytebuddy.asm.Advice;
-import org.hibernate.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +21,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = {"/api/users/","/api/user"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,17 +50,24 @@ public class UserController {
 
         User userDetail = userService.findByEmailOrUsername(username);
         String token = jwtTokenUtil.generateToken(userDetail,device);
-        return ResponseEntity.status((HttpStatus.ACCEPTED)).body(token);
+        JwtTokenResponse response = new JwtTokenResponse();
+        response.setTokenToJason(token);
+        return ResponseEntity.ok(response);
 
 
     }
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthorityService authorityService;
+    @Autowired
+    private AuthorityRepository authorityRepository;
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseBody
-    public User userListPost(@RequestBody  User user){
+    public User userListPost(@RequestBody  User user ){
         userService.save(user);
+        userService.registerUser(user);
         return user;
     }
 

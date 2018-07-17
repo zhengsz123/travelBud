@@ -5,13 +5,16 @@ import com.travel.core.domain.Gas;
 import com.travel.core.domain.User;
 import com.travel.core.repository.AuthorityRepository;
 import com.travel.core.repository.UserRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,4 +43,14 @@ public class UserService {
         return newUser;
     }
 
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
+    public User registerUser(User user){
+        Authority authority = new Authority();
+        authority.setAuthorities("REGISTERED_USER");
+        authority.setUser(user);
+        authorityRepository.save(authority);
+        return user;
+    }
 }
