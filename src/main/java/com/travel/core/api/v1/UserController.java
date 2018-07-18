@@ -5,6 +5,7 @@ import com.travel.core.extend.security.JwtTokenUtil;
 import com.travel.core.repository.AuthorityRepository;
 import com.travel.core.service.AuthorityService;
 import com.travel.core.service.GasService;
+import com.travel.core.service.StorageService;
 import com.travel.core.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,10 +82,13 @@ public class UserController {
 
     }
 
+    @Autowired
+    private StorageService storageService;
     @RequestMapping( value = "/image",method = RequestMethod.POST)
     @ResponseBody
     public Media uploadUserImage(@RequestParam ("pic") MultipartFile image){
         logger.debug(image.getName());
+        storageService.putObjectApiImplementation(image);
         return null;
     }
 
