@@ -28,7 +28,7 @@ mvn compile -Dspring.profiles.active=unit
 
 ###  migration
 
-1. url example : localhost:${port}/${databaseName}
+1. Example : mvn compile flyway:migrate -P unit -Ddb_url= localhost:5432/travelbud_unit -Ddb_password=password -Ddb_username=admin
 
 ```
 mvn compile flyway:migrate -P unit -Ddb_url=${url} -Ddb_password=${password} -Ddb_username=${username}
