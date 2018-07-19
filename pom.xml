@@ -10,6 +10,17 @@
     <packaging>war</packaging>
     <name>travel-bud-spring-mvc</name>
 
+    <properties>
+        <spring.version>5.0.6.RELEASE</spring.version>
+        <fasterxml-jackson.version>2.9.5</fasterxml-jackson.version>
+        <java-version>1.8</java-version>
+        <hibernate.version>5.3.1.Final</hibernate.version>
+        <org.slf4j-version>1.7.25</org.slf4j-version>
+        <flyway.version>5.1.1</flyway.version>
+        <jackson.version>2.9.5</jackson.version>
+        <swagger.version>2.8.0</swagger.version>
+    </properties>
+
     <profiles>
         <profile>
             <id>dev</id>
@@ -21,8 +32,8 @@
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-compiler-plugin</artifactId>
                             <configuration>
-                                <source>1.7</source>
-                                <target>1.7</target>
+                                <source>${java-version}</source>
+                                <target>${java-version}</target>
                             </configuration>
                         </plugin>
 
@@ -87,8 +98,8 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
                         <configuration>
-                            <source>1.7</source>
-                            <target>1.7</target>
+                            <source></source>
+                            <target>${java-version}</target>
                         </configuration>
                     </plugin>
 
@@ -142,17 +153,6 @@
         </profile>
     </profiles>
 
-
-    <properties>
-        <spring.version>5.0.6.RELEASE</spring.version>
-        <fasterxml-jackson.version>2.9.5</fasterxml-jackson.version>
-        <java-version>1.8</java-version>
-        <hibernate.version>5.3.1.Final</hibernate.version>
-        <org.slf4j-version>1.7.25</org.slf4j-version>
-        <flyway.version>5.1.1</flyway.version>
-        <jackson.version>2.9.5</jackson.version>
-        <swagger.version>2.8.0</swagger.version>
-    </properties>
 
     <dependencies>
         <dependency>

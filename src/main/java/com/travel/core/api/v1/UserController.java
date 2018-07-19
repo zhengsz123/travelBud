@@ -85,6 +85,7 @@ public class UserController {
     public Media uploadUserImage(@RequestParam ("pic") MultipartFile image){
         logger.debug(image.getName());
         storageService.putObjectApiImplementation(image);
+        //storageService.saveKeyUrl(user);
         return null;
     }
 

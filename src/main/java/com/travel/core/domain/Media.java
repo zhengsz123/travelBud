@@ -15,30 +15,38 @@ public class Media implements Serializable {
     private long id;
 
     @Column(name = "url")
-    private String imageUrl;
+    private String url;
 
-    @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_id")
-    private User user;
+    @Column(name = "s3Key")
+    private String s3Key;
 
-    public long getId() {
-        return id;
+    public String getS3Key() {
+        return s3Key;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public void setS3Key(String s3Key) {
+        this.s3Key = s3Key;
     }
 
-    public User getUser() {
-        return user;
+//    @NotNull
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "users_id")
+//    private User user;
+//    public long getId() {
+//        return id;
+//    }
+//    public User getUser() {
+//        return user;
+//    }
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
+
+    public String getUrl() {
+        return url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
