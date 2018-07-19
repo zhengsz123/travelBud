@@ -33,6 +33,10 @@ public class JwtTokenUtilTest {
         u.setLastName("zhang");
         u.setFirstName("zhengshi");
         u.setUsername("dameinv");
+        u.setAccountExpired(false);
+        u.setEnabled(true);
+        u.setCredentialExpired(false);
+        u.setAccountLocked(false);
         u.setAccountLocked(true);
         u.setCredentialExpired(false);
         u.setEnabled(true);

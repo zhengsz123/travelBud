@@ -43,7 +43,11 @@ public class AuthorityServiceTest {
         u.setPassword("19941227");
         u.setLastName("zhang");
         u.setFirstName("zhengshi");
-        u.setUsername("zhengshi zhang");
+        u.setUsername("dameinv");
+        u.setAccountExpired(false);
+        u.setEnabled(true);
+        u.setCredentialExpired(false);
+        u.setAccountLocked(false);
         u.setAccountLocked(true);
         u.setCredentialExpired(false);
         u.setEnabled(true);

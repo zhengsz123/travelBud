@@ -60,10 +60,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private AuthorityService authorityService;
-    @Autowired
-    private AuthorityRepository authorityRepository;
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @ResponseBody
     public User userListPost(@RequestBody  User user ){

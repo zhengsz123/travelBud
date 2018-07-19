@@ -43,7 +43,6 @@ public class UserService {
         return newUser;
     }
 
-
     @Autowired
     private AuthorityRepository authorityRepository;
     public User registerUser(User user){
