@@ -23,6 +23,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = {"/api/users/","/api/user"}, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
@@ -85,8 +87,22 @@ public class UserController {
     public Media uploadUserImage(@RequestParam ("pic") MultipartFile image){
         logger.debug(image.getName());
         storageService.putObjectApiImplementation(image);
-        //storageService.saveKeyUrl(user);
         return null;
+    }
+
+
+    @RequestMapping(value ="/getImageInfo/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Media getImage(@PathVariable Long id){
+        Media media = storageService.getImageInfo(id);
+        return media ;
+    }
+
+    @RequestMapping(value ="/downloadImage/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Media downloadImage(@PathVariable Long id){
+        storageService.downloadImage(id);
+        return null ;
     }
 
 

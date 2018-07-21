@@ -20,6 +20,10 @@ public class Media implements Serializable {
     @Column(name = "s3Key")
     private String s3Key;
 
+    public long getId() {
+        return id;
+    }
+
     public String getS3Key() {
         return s3Key;
     }
