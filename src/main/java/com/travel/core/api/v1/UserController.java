@@ -3,10 +3,7 @@ package com.travel.core.api.v1;
 import com.travel.core.domain.*;
 import com.travel.core.extend.security.JwtTokenUtil;
 import com.travel.core.repository.AuthorityRepository;
-import com.travel.core.service.AuthorityService;
-import com.travel.core.service.GasService;
-import com.travel.core.service.StorageService;
-import com.travel.core.service.UserService;
+import com.travel.core.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,5 +102,13 @@ public class UserController {
         return null ;
     }
 
+    @Autowired
+    private EmailService emailService;
+    @RequestMapping(value ="/email/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public User sendEmail(@PathVariable long id){
+        emailService.sendConfirmEmail(id);
+        return null;
+    }
 
 }
