@@ -30,6 +30,7 @@
 uploadconfig.sh
 !dev-db.properties
 !log4j.properties
+!shared.properties
 out/
 target/
 # OS generated files #
