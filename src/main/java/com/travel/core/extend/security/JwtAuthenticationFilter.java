@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    @Value("#{shareProperties['jwt.header']}")
+    @Value("#{sharedProperties['jwt.header']}")
     private String tokenHeader;
     private String bear="Bearer ";
 
