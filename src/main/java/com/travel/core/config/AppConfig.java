@@ -32,10 +32,10 @@ public class AppConfig {
             return bean;
     }
 
-    @Bean("shareProperties")
+    @Bean("sharedProperties")
     public PropertiesFactoryBean sharedProperties() throws Exception{
             PropertiesFactoryBean sharedBean = new PropertiesFactoryBean();
-            sharedBean.setLocation(new ClassPathResource("META-INF/shared.properties"));
+            sharedBean.setLocation(new ClassPathResource("META-INF/env/shared.properties"));
             return sharedBean;
         }
 

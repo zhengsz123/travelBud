@@ -28,10 +28,10 @@ public class JwtTokenUtil {
     private static final String AUDIENCE_MOBILE = "mobile";
     private static final String AUDIENCE_TABLET = "tablet";
 
-    @Value("#{shareProperties['jwt.secret']}")
+    @Value("#{sharedProperties['jwt.secret']}")
     private String secret;
 
-    @Value("#{shareProperties['jwt.expiration']}")
+    @Value("#{sharedProperties['jwt.expiration']}")
     private Long expiration;
 
     public String getUsernameFromToken(String token) {

@@ -32,20 +32,6 @@ public class Media implements Serializable {
         this.s3Key = s3Key;
     }
 
-//    @NotNull
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "users_id")
-//    private User user;
-//    public long getId() {
-//        return id;
-//    }
-//    public User getUser() {
-//        return user;
-//    }
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
-
     public String getUrl() {
         return url;
     }
