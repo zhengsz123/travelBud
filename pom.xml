@@ -58,7 +58,6 @@
                     <finalName>api-core</finalName>
                     <plugins>
 
-
                         <!--flyway database migration -->
                         <plugin>
                             <groupId>org.flywaydb</groupId>
@@ -77,6 +76,7 @@
                     </plugins>
                 </build>
         </profile>
+
         <profile>
             <id>unit</id>
             <build>
@@ -146,8 +146,6 @@
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
-
         <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -187,6 +185,7 @@
 
 
         <!--json-->
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -210,6 +209,7 @@
         </dependency>
 
         <!--hibernate-->
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -397,18 +397,13 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
         <!--AWS-->
-
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
             <version>1.11.366</version>
         </dependency>
     </dependencies>
-
-
-
 
     <repositories>
         <repository>
@@ -420,7 +415,4 @@
             </snapshots>
         </repository>
     </repositories>
-
-
-    
 </project>

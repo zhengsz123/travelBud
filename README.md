@@ -17,9 +17,10 @@ docker run --name travelBudDB -e POSTGRES_DB=travelBud -e POSTGRES_USER=admin -e
 ### Configuration information (The config file is located in ./src/main/resources/META-INF/)
 
 
-1. Fill up the unit-db.template and change the env param as per needed.
+1. Fill up the unit-db.template and change the env param as per needed for Unit Env or prod-db.template for 
+production env.
 
-2. Rename the unit-db.template to unit-db.properties
+2. Rename the unit-db.template to unit-db.properties or prod-db.template to prod-db.template.
 
 ```
 mvn compile -Dspring.profiles.active=unit
@@ -45,5 +46,5 @@ mvn compile test -Dspring.profiles.active=unit -Daws.region=${us-east-2} -Ddb_ur
 ### Package Command
 
 ```
-mvn compile package -DoutputDirectory=./target
+mvn compile package -Dmaven.test.skip=true
 ```
