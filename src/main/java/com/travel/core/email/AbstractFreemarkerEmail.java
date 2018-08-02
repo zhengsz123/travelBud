@@ -98,7 +98,7 @@ public abstract class AbstractFreemarkerEmail {
          helper.setTo(user.getEmail());        
          helper.setSubject(getMailSubject());
          helper.setText(getMailContent(user, root), true);
-         processHelper(helper, user, root);
+//         processHelper(helper, user, root);
          doSend(msg);
       } catch (IOException | TemplateException | MessagingException e) {
          logger.error("Unable to read or process freemarker configuration or template", e);
