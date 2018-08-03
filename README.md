@@ -46,5 +46,5 @@ mvn compile test -Dspring.profiles.active=unit -Daws.region=${us-east-2} -Ddb_ur
 ### Package Command
 
 ```
-mvn compile package -Dmaven.test.skip=true
+mvn compile package -Dmaven.test.skip=true -Dhash=${hash}
 ```
