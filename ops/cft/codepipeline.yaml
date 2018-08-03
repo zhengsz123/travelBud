@@ -2,6 +2,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Cloudformation template to create codebuild and codepipeline
 Parameters:
+  KEY:
+    Description: AWS key ID to use
+    Type: String
+    NoEcho: true
+  SECRET:
+    Description: AWS secret ID to use
+    Type: String
+    NoEcho: true
   VpcId:
     Description: In which VPC will Codebuild be running
     Type: AWS::EC2::VPC::Id
@@ -147,7 +155,7 @@ Resources:
             Value: 595312265488.dkr.ecr.us-east-1.amazonaws.com/ascending
         PrivilegedMode: true
         ComputeType: BUILD_GENERAL1_SMALL
-        Image: maven:3.5.0-jdk-8
+        Image:  aws/codebuild/ubuntu-base:14.04
         Type: LINUX_CONTAINER
       Name: 
         Fn::Join:
@@ -160,11 +168,6 @@ Resources:
         BuildSpec: |
           version: 0.2
           phases:
-            install:
-              commands:
-                - apt-get update
-                - apt-get install python-dev python-pip -y
-                - pip install awscli
             pre_build:
               commands:
                 - $(aws ecr get-login --no-include-email --region us-east-1)
@@ -177,6 +180,56 @@ Resources:
             post_build:
               commands:
                 - docker push ${ECR}:morgan_${IMAGE_TAG}
+        GitCloneDepth: 1
+        Location: https://github.com/zhengsz123/travelBud.git
+        Type: GITHUB
+  UpdatePod:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: no_artifacts
+      Description: Update image for pods
+      Environment: 
+        EnvironmentVariables:
+          - Name: AWS_ACCESS_KEY_ID
+            Value: !Ref KEY
+          - Name: AWS_SECRET_ACCESS_KEY
+            Value: !Ref SECRET
+          - Name: ECR
+            Value: 595312265488.dkr.ecr.us-east-1.amazonaws.com/ascending
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image:  aws/codebuild/ubuntu-base:14.04
+        Type: LINUX_CONTAINER
+      Name: 
+        Fn::Join:
+          - ''
+          - - !Ref AWS::StackName
+            - '-UpdatePod'
+      ServiceRole: 
+        Fn::ImportValue: !Sub "${SecurityStack}-CodeBuildRole"
+      Source: 
+        BuildSpec: |
+          version: 0.2
+          phases:
+            install:
+              commands:
+                - curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/linux/amd64/kubectl
+                - chmod +x ./kubectl
+                - mkdir -p /root/bin
+                - cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
+                - curl -o heptio-authenticator-aws https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/linux/amd64/heptio-authenticator-aws
+                - chmod +x ./heptio-authenticator-aws
+                - cp ./heptio-authenticator-aws $HOME/bin/heptio-authenticator-aws && export PATH=$HOME/bin:$PATH
+            pre_build:
+              commands:
+                - mkdir -p ~/.kube
+                - if [ -z "$CODEBUILD_RESOLVED_SOURCE_VERSION" ]; then SRC_HASH=${CODEBUILD_SOURCE_VERSION}; else SRC_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}; fi
+                - IMAGE_TAG=$(echo ${SRC_HASH} | cut -b 1-8)
+                - aws s3 cp s3://ascending-devops/ascending-conf/kubeconfig.yaml ~/.kube/config-AscendingEksBackend-7hsAAVY8I5Uc
+                - export KUBECONFIG=$KUBECONFIG:~/.kube/config-AscendingEksBackend-7hsAAVY8I5Uc
+            build:
+              commands:
+                - kubectl set image pod/morgan-pod morgan-pod=${ECR}:morgan_${IMAGE_TAG} --kubeconfig ~/.kube/config-AscendingEksBackend-7hsAAVY8I5Uc
         GitCloneDepth: 1
         Location: https://github.com/zhengsz123/travelBud.git
         Type: GITHUB
@@ -241,6 +294,19 @@ Resources:
                 Version: 1
               Configuration:
                 ProjectName: !Ref BuildImage
+              InputArtifacts:
+                - Name: Source
+              RunOrder: 1
+        - Name: UpdatePod
+          Actions:
+            - Name: UpdatePod
+              ActionTypeId: 
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: 1
+              Configuration:
+                ProjectName: !Ref UpdatePod
               InputArtifacts:
                 - Name: Source
               RunOrder: 1
