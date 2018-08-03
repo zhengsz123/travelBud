@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.travelbud</groupId>
-    <artifactId>api-core-v1</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>morgan</artifactId>
+    <version>${hash}</version>
     <packaging>war</packaging>
     <name>travel-bud-spring-mvc</name>
 
