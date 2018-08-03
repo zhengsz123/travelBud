@@ -20,5 +20,4 @@ public class EmailConfigTest {
         JavaMailSenderImpl emailSender = Mockito.mock(JavaMailSenderImpl.class);
         return emailSender;
     }
-
 }

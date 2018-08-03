@@ -36,5 +36,4 @@ public class GasRepositoryTest {
         assertNotNull(testGas);
         assertEquals(tester.getId(),testGas.get().getId());
     }
-
 }

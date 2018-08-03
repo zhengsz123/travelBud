@@ -2,7 +2,6 @@ package com.travel.core.api.v1;
 
 import com.travel.core.domain.*;
 import com.travel.core.extend.security.JwtTokenUtil;
-import com.travel.core.repository.AuthorityRepository;
 import com.travel.core.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +18,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = {"/api/users/","/api/user"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,8 +50,6 @@ public class UserController {
         JwtTokenResponse response = new JwtTokenResponse();
         response.setTokenToJason(token);
         return ResponseEntity.ok(response);
-
-
     }
 
     @Autowired
@@ -74,7 +69,6 @@ public class UserController {
     public Gas gasPriceUpdate(@RequestBody Gas gas){
         gasService.updateGasPrice(gas);
         return gas;
-
     }
 
     @Autowired
@@ -86,7 +80,6 @@ public class UserController {
         storageService.putObjectApiImplementation(image);
         return null;
     }
-
 
     @RequestMapping(value ="/getImageInfo/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -110,5 +103,4 @@ public class UserController {
         emailService.sendConfirmEmail(id);
         return null;
     }
-
 }
