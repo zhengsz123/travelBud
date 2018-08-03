@@ -135,48 +135,51 @@ Resources:
         GitCloneDepth: 1
         Location: https://github.com/zhengsz123/travelBud.git
         Type: GITHUB
-  # BuildImage:
-  #   Type: AWS::CodeBuild::Project
-  #   Properties:
-  #     Artifacts:
-  #       Type: no_artifacts
-  #     Description: Build Image before Deployment
-  #     Environment: 
-  #       PrivilegedMode: true
-  #       ComputeType: BUILD_GENERAL1_SMALL
-  #       Image: maven:3.5.0-jdk-8
-  #       Type: LINUX_CONTAINER
-  #     Name: 
-  #       Fn::Join:
-  #         - ''
-  #         - - !Ref AWS::StackName
-  #           - '-BuildImage'
-  #     ServiceRole: 
-  #       Fn::ImportValue: !Sub "${SecurityStack}-CodeBuildRole"
-  #     Source: 
-  #       BuildSpec: |
-  #         version: 0.2
-  #         phases:
-  #           install:
-  #             commands:
-  #               - apt-get update
-  #               - apt-get install python-dev python-pip -y
-  #               - pip install awscli
-  #           pre_build:
-  #             commands:
-  #               - $(aws ecr get-login --no-include-email --region us-east-1)
-  #               - if [ -z "$CODEBUILD_RESOLVED_SOURCE_VERSION" ]; then SRC_HASH=${CODEBUILD_SOURCE_VERSION}; else SRC_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}; fi
-  #               - IMAGE_TAG=$(echo ${SRC_HASH} | cut -b 1-8)
-  #           build:
-  #             commands:
-  #               - mvn compile package -DoutputDirectory=./target
-  #               - docker build -t "${ECR}:morgan_${IMAGE_TAG}" .
-  #           post_build:
-  #             commands:
-  #               - docker push ${ECR}:morgan_${IMAGE_TAG}
-  #       GitCloneDepth: 1
-  #       Location: https://github.com/zhengsz123/travelBud.git
-  #       Type: GITHUB
+  BuildImage:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: no_artifacts
+      Description: Build Image before Deployment
+      Environment: 
+        EnvironmentVariables:
+          - Name: ECR
+            Value: 595312265488.dkr.ecr.us-east-1.amazonaws.com/ascending
+        PrivilegedMode: true
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: maven:3.5.0-jdk-8
+        Type: LINUX_CONTAINER
+      Name: 
+        Fn::Join:
+          - ''
+          - - !Ref AWS::StackName
+            - '-BuildImage'
+      ServiceRole: 
+        Fn::ImportValue: !Sub "${SecurityStack}-CodeBuildRole"
+      Source: 
+        BuildSpec: |
+          version: 0.2
+          phases:
+            install:
+              commands:
+                - apt-get update
+                - apt-get install python-dev python-pip -y
+                - pip install awscli
+            pre_build:
+              commands:
+                - $(aws ecr get-login --no-include-email --region us-east-1)
+                - if [ -z "$CODEBUILD_RESOLVED_SOURCE_VERSION" ]; then SRC_HASH=${CODEBUILD_SOURCE_VERSION}; else SRC_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}; fi
+                - IMAGE_TAG=$(echo ${SRC_HASH} | cut -b 1-8)
+            build:
+              commands:
+                - aws s3 cp s3://ascending-devops/project1/morgan-${IMAGE_TAG}.war ./target/
+                - docker build -t "${ECR}:morgan_${IMAGE_TAG}" . --build-arg version=${IMAGE_TAG}
+            post_build:
+              commands:
+                - docker push ${ECR}:morgan_${IMAGE_TAG}
+        GitCloneDepth: 1
+        Location: https://github.com/zhengsz123/travelBud.git
+        Type: GITHUB
   AscendingCodePipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
@@ -225,6 +228,19 @@ Resources:
                 Version: 1
               Configuration:
                 ProjectName: !Ref BuildWarFile
+              InputArtifacts:
+                - Name: Source
+              RunOrder: 1
+        - Name: BuildImage
+          Actions:
+            - Name: BuildImage
+              ActionTypeId: 
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: 1
+              Configuration:
+                ProjectName: !Ref BuildImage
               InputArtifacts:
                 - Name: Source
               RunOrder: 1
