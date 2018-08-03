@@ -101,7 +101,34 @@
             </build>
 
         </profile>
+
+        <profile>
+            <id>prod</id>
+            <build>
+                <finalName>api-core</finalName>
+                <plugins>
+                    <!--flyway database migration -->
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>${flyway.version}</version>
+                        <configuration>
+                            <driver>org.postgresql.Driver</driver>
+                            <url>jdbc:postgresql://${db_url}</url>
+                            <user>${db_username}</user>
+                            <password>${db_password}</password>
+                            <locations>
+                                <location>db/migration</location>
+                            </locations>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
     </profiles>
+
+
 
 
     <dependencies>
