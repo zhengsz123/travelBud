@@ -2,6 +2,8 @@ package com.travel.core.domain;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 import java.io.Serializable;
@@ -17,6 +19,7 @@ public class Gas implements Serializable {
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "gas_id_seq")
     @SequenceGenerator(name = "gas_id_seq",sequenceName = "gas_id_seq",allocationSize = 1)
+    @JsonIgnore
     private long id;
 
     @Column(name = "gas_type")

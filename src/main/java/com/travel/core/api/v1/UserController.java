@@ -75,7 +75,7 @@ public class UserController {
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
     public Gas gasPriceUpdate(@RequestBody Gas gas){
-        gasService.updateGasPrice(gas);
+        gasService.updateGasType(gas);
         return gas;
 
     }
@@ -104,6 +104,5 @@ public class UserController {
         storageService.downloadImage(id);
         return null ;
     }
-
 
 }

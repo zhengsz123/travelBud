@@ -1,8 +1,10 @@
 package com.travel.core.service;
 
 import com.travel.core.domain.Gas;
+import com.travel.core.domain.Station;
 import com.travel.core.domain.User;
 import com.travel.core.repository.GasRepository;
+import com.travel.core.repository.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +21,17 @@ public class GasService {
         return  obj;
     }
 
-    public Gas updateGasPrice(Gas updateGasPrice){
+    @Autowired
+    private StationRepository stationRepository;
+    public Gas updateGasType(Gas updateGasType){
+        gasRepository.save(updateGasType);
+        Station station = new Station();
+        station.setGas(updateGasType);
+        stationRepository.save(station);
 
-      gasRepository.save(updateGasPrice);
-
-        return updateGasPrice;
+        return updateGasType;
     }
+
 
 
 }
