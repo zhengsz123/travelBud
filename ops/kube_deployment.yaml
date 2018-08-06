@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: morgan
+  labels:
+    app: morgan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: morgan
+  template:
+    metadata:
+      labels:
+        app: morgan
+    spec:
+      containers:
+      - name: morgan
+        image: 595312265488.dkr.ecr.us-east-1.amazonaws.com/ascending:morgan_31bd664d
+        ports:
+        - containerPort: 8080

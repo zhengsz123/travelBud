@@ -96,9 +96,11 @@ Resources:
             pre_build:
               commands:
                 - aws s3 cp s3://ascending-devops/project1/unit-db.properties ./src/main/resources/META-INF/env/unit-db.properties
+                - aws s3 cp s3://ascending-devops/project1/prod-db.properties ./src/main/resources/META-INF/env/prod-db.properties
             build:
               commands:
                 - mvn compile flyway:migrate -P unit -Ddb_username=${DB_USERNAME} -Ddb_url=${DB_URL}:5432/${DB_NAME} -Ddb_password=${DB_PASSWORD}
+                - mvn compile flyway:migrate -P prod -Ddb_username=${DB_USERNAME} -Ddb_url=${DB_URL}:5432/morgan -Ddb_password=${DB_PASSWORD}
                 - mvn compile test -Daws.region=us-east-2 -P unit
         GitCloneDepth: 1
         Location: https://github.com/zhengsz123/travelBud.git
@@ -229,7 +231,7 @@ Resources:
                 - export KUBECONFIG=$KUBECONFIG:~/.kube/config-AscendingEksBackend-7hsAAVY8I5Uc
             build:
               commands:
-                - kubectl set image pod/morgan-pod morgan-pod=${ECR}:morgan_${IMAGE_TAG} --kubeconfig ~/.kube/config-AscendingEksBackend-7hsAAVY8I5Uc
+                - kubectl set image deployment/morgan morgan=${ECR}:morgan_${IMAGE_TAG} --kubeconfig ~/.kube/config-AscendingEksBackend-7hsAAVY8I5Uc
         GitCloneDepth: 1
         Location: https://github.com/zhengsz123/travelBud.git
         Type: GITHUB
