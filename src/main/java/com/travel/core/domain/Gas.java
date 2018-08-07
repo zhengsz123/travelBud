@@ -22,16 +22,20 @@ public class Gas implements Serializable {
     @Column(name = "gas_type")
     private String gasType;
 
-    @OneToMany (fetch = FetchType.LAZY, mappedBy = "gas",cascade = CascadeType.ALL)
-    private List<Station> stations;
+
+    private Station station;
 
 
     public void setGasType(String gasType) {
         this.gasType = gasType;
     }
 
-    public void setStations(List<Station> stations) {
-        this.stations = stations;
+    public Station getStation() {
+        return station;
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
     }
 
     public long getId() {
@@ -42,7 +46,5 @@ public class Gas implements Serializable {
         return gasType;
     }
 
-    public List<Station> getStations() {
-        return stations;
-    }
+
 }
