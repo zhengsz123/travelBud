@@ -21,6 +21,7 @@ public class StationController {
         stationService.saveUpdate(station);
         return station;
     }
+
     @Autowired
     private GasService gasService;
     @RequestMapping(value = "station/{id}/gastype",method = RequestMethod.POST)

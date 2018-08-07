@@ -25,7 +25,4 @@ public class PriceController {
         logger.debug("get price list api");
         return null;
     }
-
-
-
 }

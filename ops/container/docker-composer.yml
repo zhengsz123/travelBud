@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+#  proxy:
+#    image: car-api
+#    restart: always
+#    links:
+#     - api:api-car.ascendingdc.com
+#    ports:
+#     - "80:80"
+#     - "443:443"
+  api:
+    image: travelbud-api-2
+    restart: always
+    ports:
+     - "8080:8080"
+    links:
+     - db:morgan-test-db.ascendingdc.com
+
+  db:
+    image: postgres
+    restart: always
+#    ports:
+#     - "5432:5432"
+    environment:
+     - POSTGRES_DB=travelbud_test
+     - POSTGRES_USER=admin
+     - POSTGRES_PASSWORD=password
