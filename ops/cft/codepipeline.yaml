@@ -2,6 +2,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Cloudformation template to create codebuild and codepipeline
 Parameters:
+  KEY:
+    Description: AWS key ID to use
+    Type: String
+    NoEcho: true
+  SECRET:
+    Description: AWS secret ID to use
+    Type: String
+    NoEcho: true
   VpcId:
     Description: In which VPC will Codebuild be running
     Type: AWS::EC2::VPC::Id
@@ -14,6 +22,14 @@ Parameters:
     Type: List<AWS::EC2::Subnet::Id>
   OAuthToken:
     Description: OAuthToken to connect to github
+    Type: String
+    NoEcho: true
+  Username:
+    Description: Database Username
+    Type: String
+    NoEcho: true
+  Password:
+    Description: Database Password
     Type: String
     NoEcho: true
 Resources:
@@ -43,10 +59,16 @@ Resources:
       Artifacts:
         Type: no_artifacts
       Description: Unit Test before Build and Deployment
-      Environment: 
-        # EnvironmentVariables:
-        #   - Name:  ENV
-        #     Value: !Ref Environment 
+      Environment:
+        EnvironmentVariables:
+          - Name: DB_USERNAME
+            Value: !Ref Username
+          - Name: DB_URL
+            Value: db-test.ascendingdc.com
+          - Name: DB_PASSWORD
+            Value: !Ref Password
+          - Name: DB_NAME
+            Value: morgan_unit 
         ComputeType: BUILD_GENERAL1_SMALL
         Image: maven:3.5.0-jdk-8
         Type: LINUX_CONTAINER
@@ -57,7 +79,7 @@ Resources:
             - '-UnitTest'
       VpcConfig:
         SecurityGroupIds:
-          - Fn::ImportValue: !Sub "${SecurityStack}-JumpBoxSG"
+          - Fn::ImportValue: !Sub "${SecurityStack}-WorkerNodeSG"
         Subnets: !Ref PrivateSubnets
         VpcId: !Ref VpcId
       ServiceRole: 
@@ -73,12 +95,144 @@ Resources:
                 - pip install awscli
             pre_build:
               commands:
-                - aws s3 cp s3://ascending-devops/project1/unit-db.properties ./src/main/resources/META-INF/
-                - aws s3 cp s3://ascending-devops/project1/unit-db.properties ./target/classes/META-INF/
+                - aws s3 cp s3://ascending-devops/project1/unit-db.properties ./src/main/resources/META-INF/env/unit-db.properties
+                - aws s3 cp s3://ascending-devops/project1/prod-db.properties ./src/main/resources/META-INF/env/prod-db.properties
             build:
               commands:
-                - mvn compile -P unit flyway:migrate -e -X
-                - mvn compile test -Dspring.profiles.active=unit
+                - mvn compile flyway:migrate -P unit -Ddb_username=${DB_USERNAME} -Ddb_url=${DB_URL}:5432/${DB_NAME} -Ddb_password=${DB_PASSWORD}
+                - mvn compile flyway:migrate -P prod -Ddb_username=${DB_USERNAME} -Ddb_url=${DB_URL}:5432/morgan -Ddb_password=${DB_PASSWORD}
+                - mvn compile test -Daws.region=us-east-2 -P unit
+        GitCloneDepth: 1
+        Location: https://github.com/zhengsz123/travelBud.git
+        Type: GITHUB
+  BuildWarFile:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: no_artifacts
+      Description: Build War File and upload it to s3
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: maven:3.5.0-jdk-8
+        Type: LINUX_CONTAINER
+      Name: 
+        Fn::Join:
+          - ''
+          - - !Ref AWS::StackName
+            - '-BuildWarFile'
+      ServiceRole: 
+        Fn::ImportValue: !Sub "${SecurityStack}-CodeBuildRole"
+      Source: 
+        BuildSpec: |
+          version: 0.2
+          phases:
+            install:
+              commands:
+                - apt-get update
+                - apt-get install python-dev python-pip -y
+                - pip install awscli
+            pre_build:
+              commands:
+                - if [ -z "$CODEBUILD_RESOLVED_SOURCE_VERSION" ]; then SRC_HASH=${CODEBUILD_SOURCE_VERSION}; else SRC_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}; fi
+                - HASH=$(echo ${SRC_HASH} | cut -b 1-8)
+            build:
+              commands:
+                - aws s3 cp s3://ascending-devops/project1/prod-db.properties ./src/main/resources/META-INF/env/prod-db.properties
+                - mvn compile package -Dmaven.test.skip=true -Dhash=${HASH} -Dspring.profiles.active=prod
+            post_build:
+              commands:
+                - aws s3 cp ./target/morgan-${HASH}.war s3://ascending-devops/project1/
+        GitCloneDepth: 1
+        Location: https://github.com/zhengsz123/travelBud.git
+        Type: GITHUB
+  BuildImage:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: no_artifacts
+      Description: Build Image before Deployment
+      Environment: 
+        EnvironmentVariables:
+          - Name: ECR
+            Value: 595312265488.dkr.ecr.us-east-1.amazonaws.com/ascending
+        PrivilegedMode: true
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image:  aws/codebuild/ubuntu-base:14.04
+        Type: LINUX_CONTAINER
+      Name: 
+        Fn::Join:
+          - ''
+          - - !Ref AWS::StackName
+            - '-BuildImage'
+      ServiceRole: 
+        Fn::ImportValue: !Sub "${SecurityStack}-CodeBuildRole"
+      Source: 
+        BuildSpec: |
+          version: 0.2
+          phases:
+            pre_build:
+              commands:
+                - $(aws ecr get-login --no-include-email --region us-east-1)
+                - if [ -z "$CODEBUILD_RESOLVED_SOURCE_VERSION" ]; then SRC_HASH=${CODEBUILD_SOURCE_VERSION}; else SRC_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}; fi
+                - IMAGE_TAG=$(echo ${SRC_HASH} | cut -b 1-8)
+            build:
+              commands:
+                - aws s3 cp s3://ascending-devops/project1/morgan-${IMAGE_TAG}.war ./target/
+                - docker build -t "${ECR}:morgan_${IMAGE_TAG}" . --build-arg version=${IMAGE_TAG}
+            post_build:
+              commands:
+                - docker push ${ECR}:morgan_${IMAGE_TAG}
+        GitCloneDepth: 1
+        Location: https://github.com/zhengsz123/travelBud.git
+        Type: GITHUB
+  UpdatePod:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: no_artifacts
+      Description: Update image for pods
+      Environment: 
+        EnvironmentVariables:
+          - Name: AWS_ACCESS_KEY_ID
+            Value: !Ref KEY
+          - Name: AWS_SECRET_ACCESS_KEY
+            Value: !Ref SECRET
+          - Name: ECR
+            Value: 595312265488.dkr.ecr.us-east-1.amazonaws.com/ascending
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image:  aws/codebuild/ubuntu-base:14.04
+        Type: LINUX_CONTAINER
+      Name: 
+        Fn::Join:
+          - ''
+          - - !Ref AWS::StackName
+            - '-UpdatePod'
+      ServiceRole: 
+        Fn::ImportValue: !Sub "${SecurityStack}-CodeBuildRole"
+      Source: 
+        BuildSpec: |
+          version: 0.2
+          phases:
+            install:
+              commands:
+                - curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/linux/amd64/kubectl
+                - chmod +x ./kubectl
+                - mkdir -p /root/bin
+                - cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
+                - curl -o heptio-authenticator-aws https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-06-05/bin/linux/amd64/heptio-authenticator-aws
+                - chmod +x ./heptio-authenticator-aws
+                - cp ./heptio-authenticator-aws $HOME/bin/heptio-authenticator-aws && export PATH=$HOME/bin:$PATH
+            pre_build:
+              commands:
+                - mkdir -p ~/.kube
+                - if [ -z "$CODEBUILD_RESOLVED_SOURCE_VERSION" ]; then SRC_HASH=${CODEBUILD_SOURCE_VERSION}; else SRC_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}; fi
+                - IMAGE_TAG=$(echo ${SRC_HASH} | cut -b 1-8)
+                - aws s3 cp s3://ascending-devops/ascending-conf/kubeconfig.yaml ~/.kube/config-AscendingEksBackend-7hsAAVY8I5Uc
+                - export KUBECONFIG=$KUBECONFIG:~/.kube/config-AscendingEksBackend-7hsAAVY8I5Uc
+            build:
+              commands:
+                - kubectl set image deployment/morgan morgan=${ECR}:morgan_${IMAGE_TAG} --kubeconfig ~/.kube/config-AscendingEksBackend-7hsAAVY8I5Uc
+        GitCloneDepth: 1
         Location: https://github.com/zhengsz123/travelBud.git
         Type: GITHUB
   AscendingCodePipeline:
@@ -92,7 +246,7 @@ Resources:
       Stages:
         - Name: Source
           Actions:
-            - Name: AscendingSource
+            - Name: Source
               ActionTypeId: 
                 Category: Source
                 Owner: ThirdParty
@@ -108,7 +262,7 @@ Resources:
               RunOrder: 1
         - Name: UnitTest
           Actions:
-            - Name: AscendingUnitTest
+            - Name: UnitTest
               ActionTypeId: 
                 Category: Test
                 Owner: AWS
@@ -116,6 +270,45 @@ Resources:
                 Version: 1
               Configuration:
                 ProjectName: !Ref UnitTest
+              InputArtifacts:
+                - Name: Source
+              RunOrder: 1
+        - Name: BuildWarFile
+          Actions:
+            - Name: BuildWarFile
+              ActionTypeId: 
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: 1
+              Configuration:
+                ProjectName: !Ref BuildWarFile
+              InputArtifacts:
+                - Name: Source
+              RunOrder: 1
+        - Name: BuildImage
+          Actions:
+            - Name: BuildImage
+              ActionTypeId: 
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: 1
+              Configuration:
+                ProjectName: !Ref BuildImage
+              InputArtifacts:
+                - Name: Source
+              RunOrder: 1
+        - Name: UpdatePod
+          Actions:
+            - Name: UpdatePod
+              ActionTypeId: 
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: 1
+              Configuration:
+                ProjectName: !Ref UpdatePod
               InputArtifacts:
                 - Name: Source
               RunOrder: 1
