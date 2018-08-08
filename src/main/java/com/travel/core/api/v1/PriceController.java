@@ -1,5 +1,8 @@
 package com.travel.core.api.v1;
 
+import com.travel.core.domain.Station;
+import com.travel.core.repository.StationRepository;
+import com.travel.core.service.StationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +24,12 @@ public class PriceController {
         logger.debug("get price list api");
         return null;
     }
+
+    @RequestMapping(value = "/updateStation",method = RequestMethod.POST)
+   public Station updateStation(@RequestBody Station station){
+        StationService stationService = new StationService();
+        stationService.save(station);
+        return null;
+   }
+
 }

@@ -16,9 +16,7 @@ public class Station {
     @Column (name = "gas_brand")
     private String gasBrand;
 
-
     private Gas gas;
-
 
     public long getId() {
         return id;

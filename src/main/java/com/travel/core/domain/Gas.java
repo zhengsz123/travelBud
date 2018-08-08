@@ -1,19 +1,13 @@
 package com.travel.core.domain;
-
-
-
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name = "gas")
 public class Gas implements Serializable {
-
-
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "gas_id_seq")
     @SequenceGenerator(name = "gas_id_seq",sequenceName = "gas_id_seq",allocationSize = 1)
@@ -21,10 +15,7 @@ public class Gas implements Serializable {
 
     @Column(name = "gas_type")
     private String gasType;
-
-
     private Station station;
-
 
     public void setGasType(String gasType) {
         this.gasType = gasType;
@@ -45,6 +36,4 @@ public class Gas implements Serializable {
     public String getGasType() {
         return gasType;
     }
-
-
 }
