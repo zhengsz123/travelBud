@@ -39,9 +39,10 @@ mvn compile flyway:migrate -P unit -Ddb_url=${url} -Ddb_password=${password} -Dd
 ### Unit Test
 
 ```
-mvn compile test -Dspring.profiles.active=unit -Daws.region=${us-east-2} -Ddb_url=${url} -Ddb_password=${password} -Ddb_username=${username}
+mvn compile test -Dspring.profiles.active=unit -Daws.region=${us-east-2} 
 
 ```
+
 
 ### Package Command
 
