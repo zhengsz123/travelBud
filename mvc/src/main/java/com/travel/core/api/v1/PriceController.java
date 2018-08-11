@@ -31,5 +31,4 @@ public class PriceController {
         stationService.save(station);
         return null;
    }
-
 }

@@ -21,6 +21,7 @@
 *.zip
 *.idea
 *.iml
+*.war
 
 # Logs and databases #
 ######################
