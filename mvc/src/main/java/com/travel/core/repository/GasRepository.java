@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface GasRepository extends CrudRepository<Gas, Long> {
 
-    @Query("Select g FROM Gas g LEFT JOIN FETCH g.stations where g.id = ?1")
-    Optional<Gas> findByIdWithStations(Long Id);
+//    @Query("Select g FROM Gas g LEFT JOIN FETCH g.stations where g.id = ?1")
+//    Optional<Gas> findByIdWithStations(Long Id);
 
 }

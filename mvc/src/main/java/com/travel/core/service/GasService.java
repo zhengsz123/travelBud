@@ -26,7 +26,7 @@ public class GasService {
     public Gas updateGasType(Gas updateGasType){
         gasRepository.save(updateGasType);
         Station station = new Station();
-        station.setGas(updateGasType);
+//        station.setGas(updateGasType);
         stationRepository.save(station);
 
         return updateGasType;

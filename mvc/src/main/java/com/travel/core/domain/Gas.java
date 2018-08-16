@@ -16,19 +16,20 @@ public class Gas implements Serializable {
 
     @Column(name = "gas_type")
     private String gasType;
-    private Station station;
+//    @Column(name = "gas_station")
+//    private Station station;
 
     public void setGasType(String gasType) {
         this.gasType = gasType;
     }
 
-    public Station getStation() {
-        return station;
-    }
-
-    public void setStation(Station station) {
-        this.station = station;
-    }
+//    public Station getStation() {
+//        return station;
+//    }
+//
+//    public void setStation(Station station) {
+//        this.station = station;
+//    }
 
     public long getId() {
         return id;

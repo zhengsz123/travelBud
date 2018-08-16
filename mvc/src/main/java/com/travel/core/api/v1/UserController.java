@@ -1,8 +1,10 @@
 package com.travel.core.api.v1;
 
 import com.travel.core.domain.*;
+import com.travel.core.enumdef.WorkerMessageType;
 import com.travel.core.extend.security.JwtTokenUtil;
 import com.travel.core.service.*;
+import com.travel.core.service.jms.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class UserController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private MessageService messageService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
@@ -99,10 +104,12 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping(value = "/email/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/email/{id}", method = RequestMethod.POST)
     @ResponseBody
     public User sendEmail(@PathVariable long id) {
-        emailService.sendConfirmEmail(id);
+        //emailService.sendConfirmEmail(id);
+        String idString = String.valueOf(id);
+        messageService.sendMessage(WorkerMessageType.UserSignUpMsg,idString,5000);
         return null;
     }
 }

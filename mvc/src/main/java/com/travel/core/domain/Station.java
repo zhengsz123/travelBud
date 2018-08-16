@@ -19,7 +19,6 @@ public class Station {
     @Column (name = "gas_brand")
     private String gasBrand;
 
-    private Gas gas;
 
     public long getId() {
         return id;
@@ -31,14 +30,6 @@ public class Station {
 
     public void setGasBrand(String gasBrand) {
         this.gasBrand = gasBrand;
-    }
-
-    public Gas getGas() {
-        return gas;
-    }
-
-    public void setGas(Gas gas) {
-        this.gas = gas;
     }
 
     public String getGasLocation() {
