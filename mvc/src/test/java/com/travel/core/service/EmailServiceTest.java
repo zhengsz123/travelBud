@@ -6,7 +6,6 @@ import com.travel.core.domain.User;
 import com.travel.core.email.RegistrationEmail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -57,3 +56,8 @@ public class EmailServiceTest {
         verify(javaMailSender,times(1)).send(any(MimeMessage.class));
     }
 }
+
+
+
+
+

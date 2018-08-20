@@ -2,6 +2,7 @@ package com.travel.core.config;
 
 import com.travel.core.email.RegistrationEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -12,15 +13,21 @@ import java.util.Properties;
 
 @Configuration
 public class EmailConfig {
+    @Value("#{databaseProperties['db.emailUsername']}")
+    private String username;
+    @Value("#{databaseProperties['db.emailPassword']}")
+    private String password;
+    @Value("#{databaseProperties['db.emailProtocol']}")
+    private String protocol;
     @Profile({"dev", "test", "prod"})
     @Bean(name = "mailSender")
     public JavaMailSenderImpl getEmailSender() {
         JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
         emailSender.setHost("smtp.sendgrid.net");
         emailSender.setPort(465);
-        emailSender.setProtocol("smtps");
-        emailSender.setUsername("zhengsz");
-        emailSender.setPassword("19941227t");
+        emailSender.setProtocol(protocol);
+        emailSender.setUsername(username);
+        emailSender.setPassword(password);
         Properties mailProperties = new Properties();
         mailProperties.setProperty("mail.smtps.auth", "true");
         mailProperties.setProperty("mail.smtp.ssl.enable", "true");
