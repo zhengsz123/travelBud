@@ -1,4 +1,4 @@
-package com.travel.core.config;
+package com.travelbud.config;
 
 import com.amazon.sqs.javamessaging.ProviderConfiguration;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;
@@ -14,7 +14,6 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.destination.DynamicDestinationResolver;
-
 
 @Configuration
 @EnableJms
@@ -39,9 +38,9 @@ public class JmsConfig {
     public DynamicDestinationResolver getTopicDynamicDestinationResolver(){
         return new DynamicDestinationResolver();
     }
-
     @Bean(name="jmsListenerContainerFactory")
     @DependsOn("connectionFactory")
+
     public DefaultJmsListenerContainerFactory getDefaultJmsListenerContainerFactory(@Autowired SQSConnectionFactory connectionFactory, @Autowired DynamicDestinationResolver dynamicDestinationResolver){
         DefaultJmsListenerContainerFactory jmsListenerContainerFactory = new DefaultJmsListenerContainerFactory();
         jmsListenerContainerFactory.setConnectionFactory(connectionFactory);

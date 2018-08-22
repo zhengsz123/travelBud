@@ -58,7 +58,6 @@ public class MessageService {
         } catch (JMSException e) {
             logger.error("error sending sqs message",e);
         }
-
     }
 
     @Transactional
