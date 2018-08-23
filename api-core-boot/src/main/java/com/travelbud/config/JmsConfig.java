@@ -5,7 +5,6 @@ import com.amazon.sqs.javamessaging.SQSConnectionFactory;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
-import com.travelbud.apicoreboot.MyListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.jms.support.destination.DynamicDestinationResolver;
 
 @Configuration
@@ -22,13 +20,6 @@ import org.springframework.jms.support.destination.DynamicDestinationResolver;
 public class JmsConfig {
     @Value("${aws.region}")
     private String region;
-
-    @Value("${jms.queue.name}")
-    private String queueName;
-
-    MyListener myListener = new MyListener();
-
-    JmsConfig jmsConfig =new JmsConfig();
 
     @Bean(name="connectionFactory")
     public SQSConnectionFactory getSQSConnectionFactory(){
@@ -47,9 +38,9 @@ public class JmsConfig {
     public DynamicDestinationResolver getTopicDynamicDestinationResolver(){
         return new DynamicDestinationResolver();
     }
+
     @Bean(name="jmsListenerContainerFactory")
     @DependsOn("connectionFactory")
-
     public DefaultJmsListenerContainerFactory getDefaultJmsListenerContainerFactory(@Autowired SQSConnectionFactory connectionFactory, @Autowired DynamicDestinationResolver dynamicDestinationResolver){
         DefaultJmsListenerContainerFactory jmsListenerContainerFactory = new DefaultJmsListenerContainerFactory();
         jmsListenerContainerFactory.setConnectionFactory(connectionFactory);
@@ -60,13 +51,13 @@ public class JmsConfig {
         return jmsListenerContainerFactory;
     }
 
-    @Bean(name="jmsListenerContainer")
-    public DefaultMessageListenerContainer jmsListenerContainer(){
-    DefaultMessageListenerContainer dmlc = new DefaultMessageListenerContainer();
-    dmlc.setMessageListener(myListener);
-    dmlc.setDestinationName(queueName);
-    dmlc.setConnectionFactory(jmsConfig.getSQSConnectionFactory());
-    return dmlc;
-    }
+//    @Bean(name="jmsListenerContainer")
+//    public DefaultMessageListenerContainer jmsListenerContainer(){
+//    DefaultMessageListenerContainer dmlc = new DefaultMessageListenerContainer();
+//    dmlc.setMessageListener(myListener);
+//    dmlc.setDestinationName(queueName);
+//    dmlc.setConnectionFactory(jmsConfig.getSQSConnectionFactory());
+//    return dmlc;
+//    }
 
 }
