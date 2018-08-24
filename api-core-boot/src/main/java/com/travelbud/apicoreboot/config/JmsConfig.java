@@ -1,4 +1,4 @@
-package com.travelbud.config;
+package com.travelbud.apicoreboot.config;
 
 import com.amazon.sqs.javamessaging.ProviderConfiguration;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;
@@ -50,14 +50,4 @@ public class JmsConfig {
         jmsListenerContainerFactory.setSessionAcknowledgeMode(javax.jms.Session.AUTO_ACKNOWLEDGE);
         return jmsListenerContainerFactory;
     }
-
-//    @Bean(name="jmsListenerContainer")
-//    public DefaultMessageListenerContainer jmsListenerContainer(){
-//    DefaultMessageListenerContainer dmlc = new DefaultMessageListenerContainer();
-//    dmlc.setMessageListener(myListener);
-//    dmlc.setDestinationName(queueName);
-//    dmlc.setConnectionFactory(jmsConfig.getSQSConnectionFactory());
-//    return dmlc;
-//    }
-
 }
