@@ -1,6 +1,7 @@
 package com.travel.core.repository;
 
 
+
 import com.travel.core.domain.Authority;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

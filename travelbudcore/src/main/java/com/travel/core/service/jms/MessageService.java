@@ -1,6 +1,7 @@
 package com.travel.core.service.jms;
 
 import com.amazon.sqs.javamessaging.message.SQSObjectMessage;
+
 import com.travel.core.enumdef.WorkerMessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

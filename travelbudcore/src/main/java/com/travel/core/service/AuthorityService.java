@@ -1,5 +1,6 @@
 package com.travel.core.service;
 
+
 import com.travel.core.domain.Authority;
 import com.travel.core.domain.User;
 import com.travel.core.repository.AuthorityRepository;

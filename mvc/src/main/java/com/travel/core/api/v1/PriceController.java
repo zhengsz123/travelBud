@@ -1,5 +1,6 @@
 package com.travel.core.api.v1;
 
+
 import com.travel.core.domain.Station;
 import com.travel.core.service.StationService;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class PriceController {
         return null;
     }
 
-    @RequestMapping(value = "/updateStation",method = RequestMethod.POST)
+    @RequestMapping(value = "/Station",method = RequestMethod.PUT)
    public Station updateStation(@RequestBody Station station){
         StationService stationService = new StationService();
         stationService.save(station);

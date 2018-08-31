@@ -1,9 +1,9 @@
 package com.travel.core.service;
 
+import com.travel.core.Utils;
 import com.travel.core.config.AppConfig;
 import com.travel.core.config.DatabaseConfig;
 import com.travel.core.domain.Authority;
-import com.travel.core.extend.security.Utils;
 import com.travel.core.repository.AuthorityRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(classes = {AppConfig.class,DatabaseConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("unit")
-public class UtilsTest extends Utils{
+public class UtilsTest extends Utils {
     @Autowired
     private AuthorityRepository authorityRepository;
     @Test

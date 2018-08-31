@@ -2,13 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.travelbud</groupId>
-    <artifactId>api-core-boot</artifactId>
+    <artifactId>worker</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-
-    <name>api-core-boot</name>
+    <name>travel-bud-worker</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -70,6 +68,18 @@
             <type>jar</type>
         </dependency>
 
+
+        <!--<dependency>-->
+            <!--<groupId>com.travelbud</groupId>-->
+            <!--<artifactId>api-core-mvc</artifactId>-->
+            <!--<version>${hash}</version>-->
+            <!--<scope>compile</scope>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-web</artifactId>-->
+        <!--</dependency>-->
 
 
     </dependencies>

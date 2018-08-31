@@ -1,8 +1,8 @@
 package com.travel.core.service;
 
+import com.travel.core.Utils;
 import com.travel.core.domain.Authority;
 import com.travel.core.domain.User;
-import com.travel.core.extend.security.Utils;
 import com.travel.core.repository.AuthorityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

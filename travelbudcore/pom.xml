@@ -4,16 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.travelbud</groupId>
-    <artifactId>mvc</artifactId>
-    <version>${hash}</version>
-    <packaging>war</packaging>
-    <name>travel-bud-mvc</name>
+    <artifactId>core</artifactId>
+    <packaging>jar</packaging>
+    <name>travel-bud-core</name>
 
     <parent>
         <artifactId>web</artifactId>
         <groupId>com.travelbud</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <properties>
         <spring.version>5.0.6.RELEASE</spring.version>
         <fasterxml-jackson.version>2.9.5</fasterxml-jackson.version>
@@ -26,84 +26,6 @@
         <mockito.version>2.19.0</mockito.version>
         <aws.sdk.version>1.11.360</aws.sdk.version>
     </properties>
-
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <build>
-                <finalName>api-core</finalName>
-                <plugins>
-
-                    <!--flyway database migration -->
-                    <plugin>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-maven-plugin</artifactId>
-                        <version>${flyway.version}</version>
-                        <configuration>
-                            <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://localhost:5432/travelbud</url>
-                            <user>admin</user>
-                            <password>password</password>
-                            <locations>
-                                <location>db/migration</location>
-                            </locations>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>unit</id>
-            <build>
-                <finalName>api-core</finalName>
-                <plugins>
-                    <!--flyway database migration -->
-                    <plugin>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-maven-plugin</artifactId>
-                        <version>${flyway.version}</version>
-                        <configuration>
-                            <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://${db_url}</url>
-                            <user>${db_username}</user>
-                            <password>${db_password}</password>
-                            <locations>
-                                <location>db/migration</location>
-                            </locations>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-
-        </profile>
-
-        <profile>
-            <id>prod</id>
-            <build>
-                <finalName>api-core</finalName>
-                <plugins>
-                    <!--flyway database migration -->
-                    <plugin>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-maven-plugin</artifactId>
-                        <version>${flyway.version}</version>
-                        <configuration>
-                            <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://${db_url}</url>
-                            <user>${db_username}</user>
-                            <password>${db_password}</password>
-                            <locations>
-                                <location>db/migration</location>
-                            </locations>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-
-        </profile>
-    </profiles>
-
 
 
 
@@ -180,11 +102,6 @@
             <version>3.4.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.mobile</groupId>
-            <artifactId>spring-mobile-device</artifactId>
-            <version>2.0.0.M3</version>
-        </dependency>
 
 
         <!--json-->
@@ -358,7 +275,7 @@
             <scope>test</scope>
         </dependency>
 
-         <!--mail-->
+        <!--mail-->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
@@ -469,22 +386,7 @@
             <type>jar</type>
         </dependency>
 
-        <dependency>
-            <artifactId>travelbud-core</artifactId>
-            <groupId>com.travelbud</groupId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/libs-milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+
 </project>

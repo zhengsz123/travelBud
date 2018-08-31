@@ -6,18 +6,13 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.travel.core.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.authentication.AuthenticationManager;
 
 @Configuration
-@ComponentScan(basePackages = "com.travel.core", excludeFilters = @ComponentScan.Filter(type=FilterType.REGEX,pattern="com.travel.core.api.*"))
+@Import(ServiceConfig.class)
 public class AppConfig {
 
     @Autowired

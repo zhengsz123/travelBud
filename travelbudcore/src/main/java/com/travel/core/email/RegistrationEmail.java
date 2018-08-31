@@ -1,5 +1,7 @@
 package com.travel.core.email;
 
+
+
 import com.travel.core.domain.User;
 
 import java.io.Serializable;

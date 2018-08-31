@@ -1,4 +1,5 @@
-package com.travel.core.extend.security;
+package com.travel.core;
+
 
 
 import com.travel.core.domain.Authority;
