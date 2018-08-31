@@ -1,8 +1,9 @@
-package com.travel.core.config;
+package com.travel.mvc.config;
 
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.travel.core.config.ServiceConfig;
 import com.travel.core.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 @Import(ServiceConfig.class)
+@ComponentScan(basePackages = "com.travel.mvc", excludeFilters = @ComponentScan.Filter(type=FilterType.REGEX,pattern="com.travel.core.api.*"))
 public class AppConfig {
 
     @Autowired

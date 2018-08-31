@@ -1,7 +1,7 @@
 package com.travel.core.service;
 
-import com.travel.core.config.AppConfig;
 import com.travel.core.config.DatabaseConfig;
+import com.travel.mvc.config.AppConfig;
 import com.travel.core.domain.Gas;
 import com.travel.core.repository.GasRepository;
 import org.junit.Test;

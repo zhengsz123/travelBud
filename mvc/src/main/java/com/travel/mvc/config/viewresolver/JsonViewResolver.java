@@ -1,4 +1,4 @@
-package com.travel.core.config.viewresolver;
+package com.travel.mvc.config.viewresolver;
 
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;

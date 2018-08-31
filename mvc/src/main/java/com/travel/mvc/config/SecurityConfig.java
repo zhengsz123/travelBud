@@ -1,6 +1,6 @@
-package com.travel.core.config;
+package com.travel.mvc.config;
 
-import com.travel.core.extend.security.MyAuthenticaitonEntrypoint;
+import com.travel.mvc.extend.security.MyAuthenticaitonEntrypoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

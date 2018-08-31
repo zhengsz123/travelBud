@@ -1,4 +1,4 @@
-package com.travel.core.api.v1;
+package com.travel.mvc.api.v1;
 
 
 import com.travel.core.domain.Station;

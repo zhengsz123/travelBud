@@ -1,4 +1,4 @@
-package com.travel.core.extend.security;
+package com.travel.mvc.extend.security;
 
 
 import com.travel.core.domain.User;

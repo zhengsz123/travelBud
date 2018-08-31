@@ -1,7 +1,7 @@
 package com.travel.core.repository;
 
-import com.travel.core.config.AppConfig;
 import com.travel.core.config.DatabaseConfig;
+import com.travel.mvc.config.AppConfig;
 import com.travel.core.domain.Media;
 import org.junit.Test;
 import org.junit.runner.RunWith;

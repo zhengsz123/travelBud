@@ -470,7 +470,7 @@
         </dependency>
 
         <dependency>
-            <artifactId>travelbud-core</artifactId>
+            <artifactId>core</artifactId>
             <groupId>com.travelbud</groupId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

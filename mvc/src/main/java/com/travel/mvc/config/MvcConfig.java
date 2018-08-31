@@ -1,6 +1,6 @@
-package com.travel.core.config;
+package com.travel.mvc.config;
 
-import com.travel.core.config.viewresolver.JsonViewResolver;
+import com.travel.mvc.config.viewresolver.JsonViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.travel.core.api")
+@ComponentScan("com.travel.mvc.api")
 @Import({SwaggerConfig.class})
 public class MvcConfig  implements WebMvcConfigurer {
     @Override

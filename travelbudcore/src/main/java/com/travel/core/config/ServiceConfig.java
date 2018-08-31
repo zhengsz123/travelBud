@@ -16,7 +16,6 @@ public class ServiceConfig {
 
     @Bean
     public StorageService s3Config(@Autowired @Qualifier( "databaseProperties") PropertiesFactoryBean proper) throws Exception{
-
         AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).build();
         StorageService appBean = new StorageService(s3Client);
         appBean.setBucket(proper.getObject().getProperty("s3.bucketName"));

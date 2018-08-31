@@ -1,4 +1,4 @@
-package com.travel.core.extend.security;
+package com.travel.mvc.extend.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

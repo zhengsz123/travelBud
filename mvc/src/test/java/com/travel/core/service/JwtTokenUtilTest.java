@@ -1,10 +1,10 @@
 package com.travel.core.service;
 
 
-import com.travel.core.config.AppConfig;
 import com.travel.core.config.DatabaseConfig;
+import com.travel.mvc.config.AppConfig;
 import com.travel.core.domain.User;
-import com.travel.core.extend.security.JwtTokenUtil;
+import com.travel.mvc.extend.security.JwtTokenUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

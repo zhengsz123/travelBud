@@ -1,4 +1,4 @@
-package com.travel.core.extend.security;
+package com.travel.mvc.extend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.AuthenticationException;

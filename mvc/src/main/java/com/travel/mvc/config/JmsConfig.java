@@ -1,4 +1,4 @@
-package com.travel.core.config;
+package com.travel.mvc.config;
 
 import com.amazon.sqs.javamessaging.ProviderConfiguration;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;

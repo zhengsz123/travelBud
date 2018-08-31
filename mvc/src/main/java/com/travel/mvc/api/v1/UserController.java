@@ -1,8 +1,8 @@
-package com.travel.core.api.v1;
+package com.travel.mvc.api.v1;
 
 import com.travel.core.domain.*;
 import com.travel.core.enumdef.WorkerMessageType;
-import com.travel.core.extend.security.JwtTokenUtil;
+import com.travel.mvc.extend.security.JwtTokenUtil;
 import com.travel.core.service.EmailService;
 import com.travel.core.service.GasService;
 import com.travel.core.service.StorageService;

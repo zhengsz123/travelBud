@@ -1,8 +1,8 @@
 package com.travel.core.service;
 
 import com.travel.core.Utils;
-import com.travel.core.config.AppConfig;
 import com.travel.core.config.DatabaseConfig;
+import com.travel.mvc.config.AppConfig;
 import com.travel.core.domain.Authority;
 import com.travel.core.repository.AuthorityRepository;
 import org.junit.Test;
