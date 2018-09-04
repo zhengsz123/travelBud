@@ -25,14 +25,14 @@ public class AppConfig {
     public PropertiesFactoryBean dbProperties() throws Exception {
             String profile = env.getActiveProfiles()[0];
             PropertiesFactoryBean bean = new PropertiesFactoryBean();
-            bean.setLocation(new ClassPathResource("META-INF/env/" + profile + "-db.properties"));
+            bean.setLocation(new ClassPathResource("env/" + profile + "-db.properties"));
             return bean;
     }
 
     @Bean("sharedProperties")
     public PropertiesFactoryBean sharedProperties() throws Exception{
             PropertiesFactoryBean sharedBean = new PropertiesFactoryBean();
-            sharedBean.setLocation(new ClassPathResource("META-INF/env/shared.properties"));
+            sharedBean.setLocation(new ClassPathResource("env/shared.properties"));
             return sharedBean;
         }
 

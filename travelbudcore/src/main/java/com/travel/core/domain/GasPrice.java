@@ -12,7 +12,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 public class GasPrice implements Serializable {
     @Id
     @JsonIgnore
-    @GeneratedValue(strategy = SEQUENCE, generator = "station_id_seq")
+    @GeneratedValue(strategy = SEQUENCE, generator = "gas_id_seq")
     private long id;
 
     @Column(name = "gas_price")
