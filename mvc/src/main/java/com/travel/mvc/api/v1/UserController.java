@@ -29,6 +29,7 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
     Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 

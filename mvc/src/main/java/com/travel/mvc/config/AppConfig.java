@@ -14,7 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 @Import(ServiceConfig.class)
-@ComponentScan(basePackages = "com.travel.mvc", excludeFilters = @ComponentScan.Filter(type=FilterType.REGEX,pattern="com.travel.core.api.*"))
+@ComponentScan(basePackages = "com.travel.mvc", excludeFilters = @ComponentScan.Filter(type=FilterType.REGEX,pattern="com.travel.mvc.api.*"))
 public class AppConfig {
 
     @Autowired
