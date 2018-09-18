@@ -33,7 +33,6 @@
             <build>
                 <finalName>api-core</finalName>
                 <plugins>
-
                     <!--flyway database migration -->
                     <plugin>
                         <groupId>org.flywaydb</groupId>

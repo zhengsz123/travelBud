@@ -40,3 +40,4 @@ public class Authority implements Serializable {
         this.authorities = authorities;
     }
 }
+
