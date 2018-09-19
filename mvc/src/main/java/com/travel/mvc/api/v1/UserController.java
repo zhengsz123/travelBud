@@ -2,11 +2,8 @@ package com.travel.mvc.api.v1;
 
 import com.travel.core.domain.*;
 import com.travel.core.enumdef.WorkerMessageType;
+import com.travel.core.service.*;
 import com.travel.mvc.extend.security.JwtTokenUtil;
-import com.travel.core.service.EmailService;
-import com.travel.core.service.GasService;
-import com.travel.core.service.StorageService;
-import com.travel.core.service.UserService;
 import com.travel.core.service.jms.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +17,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = {"/api/users/","/api/user"}, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -72,7 +72,10 @@ public class UserController {
         userService.registerUser(user);
         return user;
     }
+/////////////////
 
+
+/////////////////////
     @Autowired
     private GasService gasService;
 

@@ -15,8 +15,8 @@ public class AuthorityService {
     @Autowired
     private AuthorityRepository authorityRepository;
     @Transactional(readOnly = true)
-    public List<Authority> findAuthoritiesByUserId(User user){
-        List<Authority> authoritiesRoles = authorityRepository.findAuthoritiesByUserId(user.getId());
+    public Authority findAuthoritiesByUserId(User user){
+        Authority authoritiesRoles = authorityRepository.findAuthoritiesByUserId(user.getId());
         return authoritiesRoles;
     }
 }
