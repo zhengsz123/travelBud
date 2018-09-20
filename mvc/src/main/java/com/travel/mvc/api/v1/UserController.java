@@ -39,6 +39,9 @@ public class UserController {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private SmsService smsService;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> printUserLogin(@RequestParam("username") String username, @RequestParam("password") String password, Device device) {
@@ -114,9 +117,17 @@ public class UserController {
     @RequestMapping(value = "/email/{id}", method = RequestMethod.POST)
     @ResponseBody
     public User sendEmail(@PathVariable long id) {
-        //emailService.sendConfirmEmail(id);
         String idString = String.valueOf(id);
         messageService.sendMessage(WorkerMessageType.UserSignUpMsg,idString,5000);
+        return null;
+    }
+
+    @RequestMapping(value = "/sms/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public User sendSMS(@PathVariable long id){
+        String idString = String.valueOf(id);
+        messageService.sendMessage(WorkerMessageType.UserSignUpTextMessage,idString,5000);
+        //smsService.sendConfirmTextMessage(id);
         return null;
     }
 }

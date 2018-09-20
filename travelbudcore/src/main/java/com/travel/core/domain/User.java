@@ -38,6 +38,8 @@ public class User implements UserDetails {
     private Boolean enabled;
     @Column(name = "email")
     private String email;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Transient
     @JsonIgnore
@@ -106,6 +108,14 @@ public class User implements UserDetails {
 
     public Boolean getEnabled() {
         return enabled;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setEnabled(Boolean enabled) {

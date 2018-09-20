@@ -374,6 +374,14 @@
             <version>${spring.version}</version>
         </dependency>
 
+
+        <!--Twillo SDK-->
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio-java-sdk</artifactId>
+            <version>3.4.5</version>
+        </dependency>
+
         <!--aws sdk-->
         <dependency>
             <groupId>com.amazonaws</groupId>

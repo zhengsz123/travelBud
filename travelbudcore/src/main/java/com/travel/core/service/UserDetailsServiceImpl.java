@@ -55,8 +55,9 @@ public class UserDetailsServiceImpl implements UserDetailsService, MessageSource
     private AuthorityRepository authorityRepository;
     @Transactional(readOnly = true)
     public List<Authority> findAuthoritiesByUserId(User user){
-        List<Authority> authoritiesRoles = authorityRepository.findAuthoritiesByUserId(user.getId());
 
+        List<Authority> authoritiesRoles = authorityRepository.findAuthoritiesByUserId(user.getId());
         return authoritiesRoles;
+
     }
 }

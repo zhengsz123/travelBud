@@ -10,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = {"/api/admin"}, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminController {
@@ -18,13 +20,18 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/authority", method = RequestMethod.PUT)
+    @RequestMapping(value = "/authority", method = RequestMethod.GET)
     @ResponseBody
-    public Authority updateAuthority() {
+    public List <Authority> getAuthority() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user= userService.findByEmailOrUsername(userDetails.getUsername());
-        Authority authority = authorityService.findAuthoritiesByUserId(user);
-        authority.setAuthorities("TESTING");   
+        User user = userService.findByEmailOrUsername(userDetails.getUsername());
+       List <Authority > authority = authorityService.findAuthoritiesByUserId(user);
         return authority;
+    }
+
+    @RequestMapping(value = "/authority/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public void updateAuthority(@PathVariable Long id,@RequestParam("authority") String authority) {
+
     }
 }

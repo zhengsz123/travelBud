@@ -2,6 +2,7 @@ package com.travelbud.apicoreboot.Jms;
 
 
 import com.travel.core.service.EmailService;
+import com.travel.core.service.SmsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import java.util.Map;
 public class MyListener {
    @Autowired
    EmailService emailService;
+   @Autowired
+    SmsService smsService;
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     @JmsListener(destination = "${jms.queue.name}")
@@ -26,6 +29,7 @@ public class MyListener {
         Long userID = Long.valueOf(msgText);
         Long id = Long.parseLong(msgText);
         emailService.sendConfirmEmail(id);
+        smsService.sendConfirmTextMessage(id);
         logger.info("receive msgType: "+msgType);
         logger.info("receive msgText: "+msgText);
     }
