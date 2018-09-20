@@ -30,9 +30,9 @@ prod-db.properties
 test-db.properties
 unit-db.properties
 uploadconfig.sh
-!dev-db.properties
+dev-db.properties
 !log4j.properties
-!shared.properties
+shared.properties
 out/
 target/
 # OS generated files #
