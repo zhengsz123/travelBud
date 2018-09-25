@@ -30,8 +30,6 @@ public class SmsService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private TwilioRestClient client;
     public void sendConfirmTextMessage(Long id) {
         Optional<User> optional = userRepository.findById(id);
         User user = optional.get();

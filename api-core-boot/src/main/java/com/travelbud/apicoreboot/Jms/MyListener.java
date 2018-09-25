@@ -29,7 +29,7 @@ public class MyListener {
         Long userID = Long.valueOf(msgText);
         Long id = Long.parseLong(msgText);
         emailService.sendConfirmEmail(id);
-        smsService.sendConfirmTextMessage(id);
+        //smsService.sendConfirmTextMessage(id);
         logger.info("receive msgType: "+msgType);
         logger.info("receive msgText: "+msgText);
     }

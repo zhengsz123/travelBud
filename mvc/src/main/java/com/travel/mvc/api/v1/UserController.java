@@ -125,9 +125,9 @@ public class UserController {
     @RequestMapping(value = "/sms/{id}", method = RequestMethod.POST)
     @ResponseBody
     public User sendSMS(@PathVariable long id){
-        String idString = String.valueOf(id);
-        messageService.sendMessage(WorkerMessageType.UserSignUpTextMessage,idString,5000);
-        //smsService.sendConfirmTextMessage(id);
+//        String idString = String.valueOf(id);
+//        messageService.sendMessage(WorkerMessageType.UserSignUpTextMessage,idString,5000);
+        smsService.sendConfirmTextMessage(id);
         return null;
     }
 }
